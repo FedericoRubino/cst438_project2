@@ -1,0 +1,19 @@
+{
+  "name": "cst438_project2",
+  "version": "1.0.0",
+  "description": "Project 2 for cst438 using Node, express, bootstrap and MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FedericoRubino/cst438_project2.git"
+  },
+  "author": "Federico Rubino, Natalia Gill, Jonathen Welham, Anna Stubler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FedericoRubino/cst438_project2/issues"
+  },
+  "homepage": "https://github.com/FedericoRubino/cst438_project2#readme"
+}
