@@ -18,7 +18,7 @@ var bodyParser = require("body-parser");
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-
+app.use(bodyParser.urlencoded({extended:true}));
 
 // Home
 app.get("/", function(req, res){
@@ -42,6 +42,13 @@ app.get("/product-details", function(req, res){
 
 // product page
 app.get("/product-page", function(req, res){
+	console.log("Hello")
+	res.render("product-page");
+});
+
+// product page
+app.get("/product-page/:productID", function(req, res){
+	console.log(req.params.productID)
 	res.render("product-page");
 });
 
