@@ -1,6 +1,72 @@
 <%- include('templates/header'); -%>
     <script>
 
+    function Dictionary() {
+            this.datastore = [];
+
+            this.add = function(key, value) {
+                if(key && value) {
+                    this.datastore.push({
+                        key: key,
+                        value: value
+                    });
+                    return this.datastore;
+                }
+            };
+
+            this.removeAt = function(key) {
+                for(var i = 0; i < this.datastore.length; i++ ) {
+                    if(this.datastore[i].key === key) {
+                        this.datastore.splice(this.datastore[i], 1);
+                        return this.datastore;
+                    }
+                }
+                return this.datastore;
+            };
+
+            this.findAt = function(key) {
+                for(var i = 0; i < this.datastore.length; i++) {
+                    if (this.datastore[i] === key) {
+                        return this.datastore[i].value;
+                    }
+                }
+                return this.datastore;
+            };
+
+            this.size = function() {
+                return this.datastore.length;
+            };
+
+        }//Dictionary()
+     
+    function showImage(ID){
+        var arr;
+        if ( ID === 1) {
+           arr = ['images\\Core\\CPU\\CPU','images\\Core\\MotherBoard\\Motherboard'];
+            for ( var i = 1; i < 4; i++) {
+                for ( var k = 0; k < arr.length; k++) {
+                    document.getElementById("p"+i).innerHTML += "<img src='"+arr[k]+""+i+".jpg' width=50>";
+                } //inner for
+            } // outter for
+        } else if (ID === 2 ) {
+            arr = ['images\\Accessories\\HardDrives\\HardDrive', 'images\\Accessories\\USB\\USB'];
+            for ( var i = 1; i < 4; i++) {
+                for ( var k = 0; k < arr.length; k++) {
+                    document.getElementById("p"+i).innerHTML += "<img src='"+arr[k]+""+i+".jpg' width=50>";
+                } //inner for
+            } // outter for
+
+        } else if (ID === 3) {
+            arr = ['images\\Accessories\\Adapters\\Adapter', 'images\\Accessories\\Cables\\Cable'];
+            for ( var i = 1; i < 4; i++) {
+                for ( var k = 0; k < arr.length; k++) {
+                    document.getElementById("p"+i).innerHTML += "<img src='"+arr[k]+""+i+".jpg' width=50>";
+                } //inner for
+            } // outter for
+        }
+    } //showImage(ID)
+    
+    </script>
         <main>
             <style>
                 img {
