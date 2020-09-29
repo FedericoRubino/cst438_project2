@@ -15,7 +15,7 @@ You can use your connection information to connect manually through a client suc
 Property	Value	Action
 Host	ao9moanwus0rjiex.cbetxkdyhwsb.us-east-1.rds.amazonaws.com	
 Username	ua4cics2dvefr0xv	
-Password	q7rox4ht0tjx6jqn	
+Password		
 Port	3306	
 Database	ct7pzqsmv8u8s8ca	
 Server Status
