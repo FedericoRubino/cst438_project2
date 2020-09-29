@@ -1,14 +1,33 @@
 <%- include('templates/header'); -%>
+    <script>
 
-	
         <main>
-          
+            <style>
+                img {
+                    border: 1px solid #ddd; 
+                    border-radius: 4px;
+                    padding: 5px;
+                    width: 150px;
+                    margin-right:40px;
+                }
+                img:hover {
+                    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+                }
+            </style>
             <div id="content">
-            <h1> Product Page </h1>
-
+                <h1> Product Page </h1>
+                <body>
+                    <p id="p1"></p>
+                    <p id="p2"></p>
+                    <p id="p3"></p>
+                    <script>
+                        //get ID from route (not sure how to do this yet so testing with 'Core' )
+                        showImage(1);
+                    </script>   
+                  
+      
+                </body>
             </div>
-                 
-          
         </main>
 
 
