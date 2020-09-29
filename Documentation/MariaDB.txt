@@ -1,0 +1,28 @@
+MariaDB documentation: https://mariadb.com/get-started-with-mariadb/
+
+MariaDB on Heroku: https://devcenter.heroku.com/articles/jawsdb-maria
+
+Using JawsDB Maria with Node.js: https://devcenter.heroku.com/articles/jawsdb-maria#using-jawsdb-maria-with-node-js
+
+______________________Heroku MariaDB Settings for cst438project2_____________________________________________________________
+
+Connection String:
+mysql://ua4cics2dvefr0xv:q7rox4ht0tjx6jqn@ao9moanwus0rjiex.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/ct7pzqsmv8u8s8ca
+
+
+You can use your connection information to connect manually through a client such as HeidiSQL to administer your database.
+
+Property	Value	Action
+Host	ao9moanwus0rjiex.cbetxkdyhwsb.us-east-1.rds.amazonaws.com	
+Username	ua4cics2dvefr0xv	
+Password	q7rox4ht0tjx6jqn	
+Port	3306	
+Database	ct7pzqsmv8u8s8ca	
+Server Status
+Property	Value
+Status	AVAILABLE
+Max Storage	0.005 GB
+Backup Window	03:09-03:39 UTC
+Maintenance Window	TUE:09:45-TUE:10:15 UTC
+
+________________________________________________________________________________________________________________________________
