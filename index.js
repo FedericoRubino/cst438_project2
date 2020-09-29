@@ -4,17 +4,17 @@ var app = express();
 var mysql = require('mysql');
 var bodyParser = require("body-parser");
 
-
-// _________________________________________MariaDB_______________________________________________________________________________
-/* Configure MySQL DBMS */
-const connection = mysql.createConnection({
-    host: 'ao9moanwus0rjiex.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-    user: 'ua4cics2dvefr0xv',
-    password: 'q7rox4ht0tjx6jqn',
-    database: 'ct7pzqsmv8u8s8ca'
-});
-connection.connect();
-// ________________________________________________________________________________________________________________________________
+//Leave this commented out until further notice. -Jon
+// // _________________________________________MariaDB_______________________________________________________________________________
+// /* Configure MySQL DBMS */
+// const connection = mysql.createConnection({
+//     host: 'ao9moanwus0rjiex.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+//     user: 'ua4cics2dvefr0xv',
+//     password: 'q7rox4ht0tjx6jqn',
+//     database: 'ct7pzqsmv8u8s8ca'
+// });
+// connection.connect();
+// // ________________________________________________________________________________________________________________________________
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -65,7 +65,3 @@ app.get("/*", function(req, res){
 app.listen(process.env.PORT || 3000, function(){
 	console.log("Server is running...");
 });
-
-
-
-// Test
