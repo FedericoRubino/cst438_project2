@@ -42,15 +42,15 @@ app.get("/product-details", function(req, res){
 
 // product page
 app.get("/product-page", function(req, res){
-	console.log("Hello")
-	res.render("product-page");
+	// console.log("Hello")
+	res.render("product-page", {productID:req.query.productID});
 });
 
-// product page
-app.get("/product-page/:productID", function(req, res){
-	console.log(req.params.productID)
-	res.render("product-page");
-});
+// // product page
+// app.get("/product-page/:productID", function(req, res){
+// 	// console.log(req.params.productID)
+// 	res.render("product-page", {productID:req.params.productID});
+// });
 
 // shopping cart
 app.get("/shopping-cart", function(req, res){
