@@ -22,5 +22,16 @@ body, p, a, {
     .navbar-right {
         margin-top: -50px;
     }
+
+@media only screen 
+            and (max-device-width: 480px)
+            and (orientation: portrait) {
+                #dropdownMenuButtonAccount {
+                    padding-bottom: 10px;
+                }
+                #dropDownMenuButtonCart {
+                    margin-left: 0px;
+                }
+        }
 }
 
