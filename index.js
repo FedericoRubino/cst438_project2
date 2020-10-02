@@ -8,11 +8,21 @@ var pg = require('pg');
 /* Configure PostGres DBMS */
 const connectionString = "postgres://rbzsyojsobnbob:873c939e5e300adc7fab04974f1009f9ffedb5e46ac5729f3b66c8efefbc6d4a@ec2-54-160-161-214.compute-1.amazonaws.com:5432/d9bm3n25k10aka";
 var pgClient = new pg.Client(connectionString);
-new Promise((resolve, reject) =>{
-	pgClient.connect();
-	return reject('Error');
-}).catch(() => { return });
+
+async function con() {
+	
+	let promise = new Promise((resolve, reject) => {
+		setTimeout(() => resolve(pgClient.connect() ), 1000)
+	})
+
+	let result = await promise;
+
+	alert(result);
+}
+
+
 // ________________________________________________________________________________________________________________________________
+
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
