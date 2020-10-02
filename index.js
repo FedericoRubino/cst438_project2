@@ -9,6 +9,7 @@ var pg = require('pg');
 const connectionString = "postgres://rbzsyojsobnbob:873c939e5e300adc7fab04974f1009f9ffedb5e46ac5729f3b66c8efefbc6d4a@ec2-54-160-161-214.compute-1.amazonaws.com:5432/d9bm3n25k10aka";
 var pgClient = new pg.Client(connectionString);
 
+/* Async function + await promise fixes the issue by setting a delay */
 async function con() {
 	
 	let promise = new Promise((resolve, reject) => {
