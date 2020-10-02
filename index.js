@@ -1,20 +1,18 @@
 var express = require("express");
 var app = express();
-
-var mysql = require('mysql');
 var bodyParser = require("body-parser");
+var pg = require('pg');
 
-//Leave this commented out until further notice. -Jon
-// // _________________________________________MariaDB_______________________________________________________________________________
-// /* Configure MySQL DBMS */
-// const connection = mysql.createConnection({
-//     host: 'ao9moanwus0rjiex.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-//     user: 'ua4cics2dvefr0xv',
-//     password: 'q7rox4ht0tjx6jqn',
-//     database: 'ct7pzqsmv8u8s8ca'
-// });
-// connection.connect();
-// // ________________________________________________________________________________________________________________________________
+
+// _________________________________________PostGres_______________________________________________________________________________
+/* Configure PostGres DBMS */
+const connectionString = "postgres://rbzsyojsobnbob:873c939e5e300adc7fab04974f1009f9ffedb5e46ac5729f3b66c8efefbc6d4a@ec2-54-160-161-214.compute-1.amazonaws.com:5432/d9bm3n25k10aka";
+var pgClient = new pg.Client(connectionString);
+new Promise((resolve, reject) =>{
+	pgClient.connect();
+	return reject('Error');
+}).catch(() => { return });
+// ________________________________________________________________________________________________________________________________
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
