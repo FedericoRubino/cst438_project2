@@ -1,0 +1,13 @@
+pgsql needed to be installed because we were having permission problems.
+HeidiSQL worked with the creation of the table but HeidiSQL client is very ugly.
+pgAdmin came with the Stack Builder when pgsql was installed.
+URL: https://www.pgadmin.org/
+
+pgAdmin4 is more appealing than heidisql and allows a better interface with more capabilities. Databases are visualized as well as all of its components (Schemas/Tables/Grants).
+
+Warning found when trying to connect locally through node.
+"UnhandledPromiseRejectionWarning" -10-1-2020
+-Fixed 10-1-2020 Await/Async
+
+Await/Async help: https://javascript.info/async-await
+
