@@ -1,96 +1,14 @@
 <%- include('templates/header'); -%>
-    <script>
-
-    function Dictionary() {
-            this.datastore = [];
-
-            this.add = function(key, value) {
-                if(key && value) {
-                    this.datastore.push({
-                        key: key,
-                        value: value
-                    });
-                    return this.datastore;
-                }
-            };
-
-            this.removeAt = function(key) {
-                for(var i = 0; i < this.datastore.length; i++ ) {
-                    if(this.datastore[i].key === key) {
-                        this.datastore.splice(this.datastore[i], 1);
-                        return this.datastore;
-                    }
-                }
-                return this.datastore;
-            };
-
-            this.findAt = function(key) {
-                for(var i = 0; i < this.datastore.length; i++) {
-                    if (this.datastore[i] === key) {
-                        return this.datastore[i].value;
-                    }
-                }
-                return this.datastore;
-            };
-
-            this.size = function() {
-                return this.datastore.length;
-            };
-
-        }//Dictionary()
-     
-    function showImage(ID){
-        var arr;
-        if ( ID === 1) {
-           arr = ['images\\Core\\CPU\\CPU','images\\Core\\MotherBoard\\Motherboard'];
-            for ( var i = 1; i < 4; i++) {
-                for ( var k = 0; k < arr.length; k++) {
-                    document.getElementById("p"+i).innerHTML += "<img src='"+arr[k]+""+i+".jpg' width=50>";
-                } //inner for
-            } // outter for
-        } else if (ID === 2 ) {
-            arr = ['images\\Accessories\\HardDrives\\HardDrive', 'images\\Accessories\\USB\\USB'];
-            for ( var i = 1; i < 4; i++) {
-                for ( var k = 0; k < arr.length; k++) {
-                    document.getElementById("p"+i).innerHTML += "<img src='"+arr[k]+""+i+".jpg' width=50>";
-                } //inner for
-            } // outter for
-
-        } else if (ID === 3) {
-            arr = ['images\\Accessories\\Adapters\\Adapter', 'images\\Accessories\\Cables\\Cable'];
-            for ( var i = 1; i < 4; i++) {
-                for ( var k = 0; k < arr.length; k++) {
-                    document.getElementById("p"+i).innerHTML += "<img src='"+arr[k]+""+i+".jpg' width=50>";
-                } //inner for
-            } // outter for
-        }
-    } //showImage(ID)
-    
-    </script>
-        <main>
-            <style>
-                img {
-                    border: 1px solid #ddd; 
-                    border-radius: 4px;
-                    padding: 5px;
-                    width: 150px;
-                    margin-right:40px;
-                }
-                img:hover {
-                    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
-                }
-            </style>
             <div id="content">
                 <h1> Product Page </h1>
-                <div>
-                    <p id="p1"></p>
-                    <p id="p2"></p>
-                    <p id="p3"></p>
+                <div id="images">
                     <script>
                         //get ID from route (not sure how to do this yet so testing with 'Core' )
-                        showImage(<%=productID%>);
+                        showImages(<%=productID%>);
+
+                        // testFun("hello there <%=productID%>");
                     </script>   
-                    <div> Hello there: <%=productID%> </div>
+                    <div id="test"></div>
       
                 </div>
             </div>

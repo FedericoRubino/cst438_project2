@@ -25,6 +25,28 @@ async function con() {
 // ________________________________________________________________________________________________________________________________
 
 
+// _________________________________________Query Functions_______________________________________________________________________________
+var product_table = "PRODUCT_TABLE";
+var currentCustomer = "logged_in_user"; //this is temporary until we figure this out
+
+
+var findIdBySearchValue = function(keyword){
+	return 2; // this is just temporary until the database has been finished  
+	var getIdByKeyword = "SELECT * FROM " + product_table + " WHERE customerId =" + currentCustomer + " AND WHERE productName LIKE '%" + keyword + "%'";
+	connection.query(getIdByKeyword, function(error,found){
+    	var products = null;
+    	if(error) throw error;
+		if(found.length){
+			return found; // this gets us a list of products that have the keyword in their name
+		}
+    });
+}
+
+
+// ________________________________________________________________________________________________________________________________
+
+
+
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
@@ -46,7 +68,7 @@ app.get("/login", function(req, res){
 
 // product details
 app.get("/product-details", function(req, res){
-	res.render("product-details");
+	res.render("product-details", {productPath:req.query.productID});
 });
 
 // product page
@@ -55,11 +77,12 @@ app.get("/product-page", function(req, res){
 	res.render("product-page", {productID:req.query.productID});
 });
 
-// // product page
-// app.get("/product-page/:productID", function(req, res){
-// 	// console.log(req.params.productID)
-// 	res.render("product-page", {productID:req.params.productID});
-// });
+app.get("/search-action", function(req, res) {
+    var keyword = req.query.search_field;
+    console.log(keyword); // check if the search value gets passed successfully
+    var id = findIdBySearchValue(keyword); // this function should return a list of products which we will then display on the products page
+    res.render("product-page", {productID:id});
+});
 
 // shopping cart
 app.get("/shopping-cart", function(req, res){
