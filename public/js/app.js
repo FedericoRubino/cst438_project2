@@ -51,6 +51,18 @@ var showImages = function(value) {
     } 
 }
 
+// returns an array based on user input
+ function getSRCs(value) {
+    paths = ['images\\Core\\CPU\\CPU','images\\Accessories\\HardDrives\\HardDrive','images\\Accessories\\Adapters\\Adapter', 'images\\Core\\MotherBoard\\Motherboard','images\\Accessories\\USB\\USB', 'images\\Accessories\\Cables\\Cable'];
+    var arrSRCs = new Array();
+    for (var i = 0; i < 3; i++) {
+        var id = paths[value].split("\\")[3];
+        arrSRCs[i]= '"+paths[value]+i+".jpg';
+        return arrSRCs;
+        // document.getElementById("images").innerHTML += "<img src='"+paths[value]+i+".jpg' width=50>";
+    } 
+}
+
 // print all of tne images for the home page 
 var showButtonImagesHome = function() {
     paths = ['images\\Core\\CPU\\CPU','images\\Accessories\\HardDrives\\HardDrive','images\\Accessories\\Adapters\\Adapter', 'images\\Core\\MotherBoard\\Motherboard','images\\Accessories\\USB\\USB', 'images\\Accessories\\Cables\\Cable'];
