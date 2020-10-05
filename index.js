@@ -3,7 +3,6 @@ var app = express();
 var bodyParser = require("body-parser");
 var pg = require('pg');
 
-
 // _________________________________________PostGres_______________________________________________________________________________
 /* Configure PostGres DBMS */
 const connectionString = "postgres://rbzsyojsobnbob:873c939e5e300adc7fab04974f1009f9ffedb5e46ac5729f3b66c8efefbc6d4a@ec2-54-160-161-214.compute-1.amazonaws.com:5432/d9bm3n25k10aka";
@@ -40,7 +39,6 @@ var findIdBySearchValue = function(keyword){
     });
 }
 // ________________________________________________________________________________________________________________________________
-
 
 
 app.set('view engine', 'ejs');
@@ -100,7 +98,21 @@ app.get("/*", function(req, res){
 app.listen(process.env.PORT || 3000, function(){
 	console.log("Server is running...");
 	// instantiate();
+	// var output = callToTest.showAllProduct.call(product_table);
+	// alert(output);
+		// callback here 
+	const text = 'INSERT INTO product_table(product_id, name, price, details, inventory, img_path) VALUES($1, $2, $3, $4, $5, $6) RETURNING *'
+	const values = ['v1', 'v2', 'v3', 'v4', 'v5', 'v6']
+	pgClient.query(text, values, (err, res) => {
+		if(err){
+			console.log(err.stack)
+		} else {
+			console.log(res.rows[0])
+		}
+	})
+	//promise here
 });
+
 
 
 // _____________ DB TESTING ___________________________________ 
@@ -115,68 +127,61 @@ app.listen(process.env.PORT || 3000, function(){
 
 // function instantiate(){
 	
-// 	var callToTest = function (){
-// 		i = 0;
-// 		insert: function (tableName){
-// 			if(tableName == product_table){
-// 				// pgClient.con
-// 				// INSERT INTO product_table(c1, c2, ...) VALUES(v1, v2, ...) RETURNING *;
-				
-// 				// callback here 
-// 				pgClient.query('INSERT INTO product_table(product_id, name, price, details, inventory, img_path) VALUES("v1", "v2", "v3", "v4", "v5", "v6")RETURNING *',
-// 					(err, res) => {
-// 					if(err){
-// 						console.log(err.stack)
-// 					} else {
-// 						console.log(res.rows[0])
-// 					}
-// 				})
+	//Tables
+var product_table = {
+	product_id: "product_id",
+	name: "product_name",
+	price: "price",
+	details: "details",
+	inventory: "inventory",
+	img_path: "img_path"
+}
+var user_table = {
+	user_id: "user_id",
+	username: "username",
+	password: "password",
+	product_bought_id: "product_bought_id"
+}
+// var callToTest = {
+// 	insert: function(){
+// 		// if(tableName == product_table){
+// 		// 	// pgClient.con
+// 		// 	// INSERT INTO product_table(c1, c2, ...) VALUES(v1, v2, ...) RETURNING *;
+			
+// 		// 	// callback here 
+// 		// 	pgClient.query('INSERT INTO product_table(product_id, name, price, details, inventory, img_path) VALUES("v1", "v2", "v3", "v4", "v5", "v6")RETURNING *',
+// 		// 		(err, res) => {
+// 		// 		if(err){
+// 		// 			console.log(err.stack)
+// 		// 		} else {
+// 		// 			console.log(res.rows[0])
+// 		// 		}
+// 		// 	});
 
-// 				//promise here
-// 			}
-// 		}
-// 		update: function (tableName){
+// 		// 	//promise here
+// 		// }
+// 	}
+// 	// update: function (tableName){
 
-// 		}
-// 		delete: function (tableName){
+// 	// }
+// 	// delete: function (tableName){
 
-// 		}
-// 		showAllProduct: function(){
-// 			// SELECT * FROM product_table
-// 			return this.product_id + " " +
-// 					this.name + " " +
-// 					this.price + " " +
-// 					this.details + " " + 
-// 					this.inventory + " " + 
-// 					this.img_path + "\n" ;
-// 		} 
-// 		showAllUser: function (){
-// 			return this.user_id + " " + 
-// 					this.username + " " + 
-// 					this.password + " " + 
-// 					product_bought_id + "\n";
-
-// 		}
+// 	// }
+// 	showAllProduct: function(){
+// 		// SELECT * FROM product_table
+// 		return this.product_id + " " +
+// 				this.name + " " +
+// 				this.price + " " +
+// 				this.details + " " + 
+// 				this.inventory + " " + 
+// 				this.img_path + "\n" ;
+// 	} 
+// 	showAllUser: function (){
+// 		return this.user_id + " " + 
+// 				this.username + " " + 
+// 				this.password + " " + 
+// 				product_bought_id + "\n";
 
 // 	}
-
-// 	//Tables
-// 	var product_table = {
-// 		product_id: "product_id",
-// 		name: "product_name",
-// 		price: "price",
-// 		details: "details",
-// 		inventory: "inventory",
-// 		img_path: "img_path"
-
-
-// 	}
-// 	var user_table = {
-// 		user_id: "user_id",
-// 		username: "username",
-// 		password: "password",
-// 		product_bought_id: "product_bought_id"
-// 	}
-// 	output = callToTest.showAllProduct.call(product_table);
-// 	alert(output)
 // }
+// 
