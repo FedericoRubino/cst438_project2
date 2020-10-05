@@ -20,8 +20,6 @@ async function con() {
 
 	alert(result);
 }
-
-
 // ________________________________________________________________________________________________________________________________
 
 
@@ -41,8 +39,6 @@ var findIdBySearchValue = function(keyword){
 		}
     });
 }
-
-
 // ________________________________________________________________________________________________________________________________
 
 
@@ -103,4 +99,84 @@ app.get("/*", function(req, res){
 // required server
 app.listen(process.env.PORT || 3000, function(){
 	console.log("Server is running...");
+	// instantiate();
 });
+
+
+// _____________ DB TESTING ___________________________________ 
+// index.js was the only thing not saved to stash for some reason
+// So lost all the db test code
+// Insert item into database
+// Check to see if data can be retrieved from database (var = retrievedValue, next(retrievedValue == insertedValue, ?))
+// Update value in database (increment or decrement)
+// Retrieve value and test to see if it has been incremented (insertedValue =/= retrievedValue)
+// Decrement Value, UPDATE
+// _________________These tests prove that the data can be Inserted, Retrieved, Updated, and Deleted_________________________________________ 
+
+// function instantiate(){
+	
+// 	var callToTest = function (){
+// 		i = 0;
+// 		insert: function (tableName){
+// 			if(tableName == product_table){
+// 				// pgClient.con
+// 				// INSERT INTO product_table(c1, c2, ...) VALUES(v1, v2, ...) RETURNING *;
+				
+// 				// callback here 
+// 				pgClient.query('INSERT INTO product_table(product_id, name, price, details, inventory, img_path) VALUES("v1", "v2", "v3", "v4", "v5", "v6")RETURNING *',
+// 					(err, res) => {
+// 					if(err){
+// 						console.log(err.stack)
+// 					} else {
+// 						console.log(res.rows[0])
+// 					}
+// 				})
+
+// 				//promise here
+// 			}
+// 		}
+// 		update: function (tableName){
+
+// 		}
+// 		delete: function (tableName){
+
+// 		}
+// 		showAllProduct: function(){
+// 			// SELECT * FROM product_table
+// 			return this.product_id + " " +
+// 					this.name + " " +
+// 					this.price + " " +
+// 					this.details + " " + 
+// 					this.inventory + " " + 
+// 					this.img_path + "\n" ;
+// 		} 
+// 		showAllUser: function (){
+// 			return this.user_id + " " + 
+// 					this.username + " " + 
+// 					this.password + " " + 
+// 					product_bought_id + "\n";
+
+// 		}
+
+// 	}
+
+// 	//Tables
+// 	var product_table = {
+// 		product_id: "product_id",
+// 		name: "product_name",
+// 		price: "price",
+// 		details: "details",
+// 		inventory: "inventory",
+// 		img_path: "img_path"
+
+
+// 	}
+// 	var user_table = {
+// 		user_id: "user_id",
+// 		username: "username",
+// 		password: "password",
+// 		product_bought_id: "product_bought_id"
+// 	}
+// 	output = callToTest.showAllProduct.call(product_table);
+// 	alert(output)
+// }
