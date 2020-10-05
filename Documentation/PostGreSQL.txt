@@ -1,0 +1,41 @@
+
+/* DOCUMENTATION: https://www.postgresql.org/docs/13/index.html */
+
+pgsql needed to be installed because we were having permission problems.
+HeidiSQL worked with the creation of the table but HeidiSQL client is very ugly.
+
+pgAdmin came with the Stack Builder when pgsql was installed.
+
+/* URL: https://www.pgadmin.org/ */
+
+pgAdmin4 is more appealing than heidisql and allows a better interface with more capabilities. Databases are visualized as well as all of its components (Schemas/Tables/Grants).
+
+KEY DIFFERENCE: postgre vs mysql
+https://blog.panoply.io/postgresql-vs.-mysql
+
+PostgreSQL is an Object Relational Database Management System (ORDBMS) whereas MySQL is a community driven DBMS system. PostgreSQL support modern applications feature like JSON, XML etc. ... PostgreSQL is complete ACID compliant while MySQL is only ACID compliant when used with InnoDB and NDB
+
+
+
+Warning found when trying to connect locally through node.
+"UnhandledPromiseRejectionWarning" -10-1-2020
+-Fixed 10-1-2020 Await/Async
+
+Await/Async help: https://javascript.info/async-await
+
+PostGreSQL Data Types: 
+https://w3resource.com/PostgreSQL/data-types.php
+
+Who uses these databases?
+Here are a few examples of companies that use these databases:
+
+PostgreSQL: Apple, BioPharm, Etsy, IMDB, Macworld, Debian, Fujitsu, Red Hat, Sun Microsystem, Cisco, Skype
+
+MySQL: GitHub, US Navy, NASA, Tesla, Netflix, WeChat, Facebook, Zendesk, Twitter, Zappos, YouTube, Spotify.
+
+PostgREST - RESTful API 
+http://postgrest.org/en/v7.0.0/
+
+***This may be helpful when we do the docker stuff***
+-I wouldnt doubt that we may have to use docker + databases
+http://postgrest.org/en/v7.0.0/tutorials/tut0.html <= Docker + database tutorial 
