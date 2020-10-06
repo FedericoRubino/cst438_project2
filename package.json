@@ -1,11 +1,11 @@
 {
   "name": "cst438_project2",
   "version": "1.0.0",
-  "description": "Project 2 for cst438 using Node, express, bootstrap and MongoDB",
+  "description": "Project 2 for cst438 using Node, express, bootstrap, PostGres, and Jest",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,10 @@
     "body-parser": "^1.19.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "pg": "^8.3.3"
+    "express-session": "^1.17.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "jest": "^26.5.0"
   }
 }

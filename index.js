@@ -1,28 +1,77 @@
 var express = require("express");
 var app = express();
+var session = require('express-session')
 var bodyParser = require("body-parser");
-var pg = require('pg');
+var mysql = require('mysql');
 
 
-// _________________________________________PostGres_______________________________________________________________________________
-/* Configure PostGres DBMS */
-const connectionString = "postgres://rbzsyojsobnbob:873c939e5e300adc7fab04974f1009f9ffedb5e46ac5729f3b66c8efefbc6d4a@ec2-54-160-161-214.compute-1.amazonaws.com:5432/d9bm3n25k10aka";
-var pgClient = new pg.Client(connectionString);
+app.use(session({
+	secret: 'top secret code!',
+	resave: true,
+	saveUninitialized: true
+}));
 
-/* Async function + await promise fixes the issue by setting a delay */
-async function con() {
-	
-	let promise = new Promise((resolve, reject) => {
-		setTimeout(() => resolve(pgClient.connect() ), 1000)
-	})
+// ___________________________CLEARDB_______________________________________________________________________________________________
 
-	let result = await promise;
+// mysql://b17b3063986ea6:e550d2df@us-cdbr-east-02.cleardb.com/heroku_135761bbf9978a7?reconnect=true
 
-	alert(result);
+// To connect to database via mysql command line
+// mysql --host=us-cdbr-east-02.cleardb.com --user=b17b3063986ea6 --password=e550d2df --reconnect heroku_135761bbf9978a7
+
+var connection = mysql.createPool({
+  host: "us-cdbr-east-02.cleardb.com",
+  user: "b17b3063986ea6",
+  password: "e550d2df",
+  database: "heroku_135761bbf9978a7"
+});
+module.exports = connection;
+
+// _________________________________________________________________________________________________________________________________
+
+
+app.post('/create-account', function(req, res){
+	let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
+	let data = [req.body.username, req.body.password];
+	connection.query(statement, data, function(error, result){
+		if(error) throw error;
+		console.log(statement);
+		res.redirect('/home');
+	});
+});
+
+// grabs the username/password from login and checks to see if the user is valid
+app.post('/login', async function(req, res){
+	let doesUserExist = await checkUser(req.body.username);
+	let passwordMatch = await checkPassword(req.body.password);
+	if(passwordMatch){
+		req.session.authenticated = true;
+		req.session.user = doesUserExist[0].username;
+
+		res.redirect('/home');
+	} else {
+		res.render('login', {error: true});
+	}
+});
+
+// Grabs the username in the table
+function checkUser(username){
+	let statement = 'SELECT * FROM user_table WHERE username=?';
+	return new Promise(function(resolve, reject){
+		connection.query(statement, [username], function(error, results){
+			if(error) throw error;
+			resolve(results);
+		});
+	});
 }
+// Grabs the password in the table
+// function checkPassword(password){
+// 	return new Promise(function(resolve, reject){
+// 		// Use bcrypt to compare password?
+// 	})
+// }
 
 
-// ________________________________________________________________________________________________________________________________
+
 
 
 // _________________________________________Query Functions_______________________________________________________________________________
@@ -41,10 +90,7 @@ var findIdBySearchValue = function(keyword){
 		}
     });
 }
-
-
 // ________________________________________________________________________________________________________________________________
-
 
 
 app.set('view engine', 'ejs');

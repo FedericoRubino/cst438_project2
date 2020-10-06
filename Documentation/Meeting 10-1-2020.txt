@@ -1,0 +1,20 @@
+Product Table 
+-ID
+-NAME
+-price
+-Details
+-Inventory
+-Image path
+
+User Table
+-ID
+-USERNAME
+-PASSWORD
+-LIST<PRODUCT> <--//No correlating datatype found at the moment 10/1/2020, Fixed: productID -> Integer[n] 
+
+-Test to see if we can insert and grab data from the database
+
+Unhandled promise rejections are deprecated. 
+In the future, promise rejections that are not handled will terminate the Node.js 
+process with a non-zero exit code.
+Source: https://til.hashrocket.com/posts/aucwkd8b36-asyncawait-unhandledpromiserejectionwarning
