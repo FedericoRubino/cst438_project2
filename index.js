@@ -112,6 +112,11 @@ app.get("/login", function(req, res){
 	res.render("login");
 });
 
+// Create Account
+app.get("/create-account", function(req, res){
+	res.render("create-account");
+});
+
 // Login Authentication TODO: make controller
 app.post('/login', function(req, res){
 	res.send("Successful to POST @ login '/login'!\n");
