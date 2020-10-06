@@ -71,6 +71,11 @@ app.get("/create-account", function(req, res){
 	res.render("create-account");
 });
 
+// Login Authentication TODO: make controller
+app.post('/login', function(req, res){
+	res.send("Successful to POST @ login '/login'!\n");
+ });
+
 // product details
 app.get("/product-details", function(req, res){
 	res.render("product-details", {productPath:req.query.productID});
@@ -109,3 +114,76 @@ app.get("/*", function(req, res){
 app.listen(process.env.PORT || 3000, function(){
 	console.log("Server is running...");
 });
+
+
+// LEAVE BELOW COMMENTED OUT, We may use it for later
+
+// _____________ DB TESTING ___________________________________ 
+// index.js was the only thing not saved to stash for some reason
+// So lost all the db test code
+// Insert item into database
+// Check to see if data can be retrieved from database (var = retrievedValue, next(retrievedValue == insertedValue, ?))
+// Update value in database (increment or decrement)
+// Retrieve value and test to see if it has been incremented (insertedValue =/= retrievedValue)
+// Decrement Value, UPDATE
+// _________________These tests prove that the data can be Inserted, Retrieved, Updated, and Deleted_________________________________________ 
+
+// function instantiate(){
+	
+// 	var callToTest = {
+// 		insert: function (tableName){
+// 			if(tableName == product_table){
+// 				// pgClient.con
+// 				// INSERT INTO product_table(c1, c2, ...) VALUES(v1, v2, ...) RETURNING *;
+// 				const text = "INSERT INTO product_table(product_id, name, price, details, inventory, img_path) VALUES($1, $2, $3, $4, $5, $6) RETURNING *";
+// 				const values = ['v1', 'v2', 'v3', 'v4', 'v5', 'v6'];
+				
+// 				async function q() {
+	
+// 					let promise = new Promise((resolve, reject) => {
+// 						setTimeout(() => resolve(pgClient.query(test, values)), 1000)
+// 					})
+
+// 					let result = await promise;
+
+// 					alert(result);
+// 				}
+// 				q();
+
+// 				// pgClient.query((test, values), function(error,found){
+// 			 //    	var products = null;
+// 			 //    	if(error) throw error;
+// 				// 	if(found.length){
+// 				// 		return found; // this gets us a list of products that have the keyword in their name
+// 				// 	}
+//     // 			});
+// 				//promise here
+// 		// 	}
+// 		// }
+
+// 		showAllProduct: function (product_table){
+// 			return this.product_id + " " + this.name + " " + this.price + " " + this.details + " " + this.inventory + " " + this.img_path + "\n" ;
+// 		}
+// 	} 
+
+// 	// }
+// 	var product_table = {
+// 		product_id: "product_id",
+// 		name: "product_name",
+// 		price: "price",
+// 		details: "details",
+// 		inventory: "inventory",
+// 		img_path: "img_path"
+// 	}
+// 	var user_table = {
+// 		user_id: "user_id",
+// 		username: "username",
+// 		password: "password",
+// 		product_bought_id: "product_bought_id"
+// 	}
+// 			//Tables
+
+// 	console.log(callToTest.showAllProduct.call(product_table));
+// 	// console.log(callToTest.insert.call(product_table));
+// 	// callToTest.insert.call(product_table);
+// }
