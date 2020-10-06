@@ -1,25 +1,76 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
-var pg = require('pg');
+var mysql = require('mysql');
 
-// _________________________________________PostGres_______________________________________________________________________________
-/* Configure PostGres DBMS */
-const connectionString = "postgres://rbzsyojsobnbob:873c939e5e300adc7fab04974f1009f9ffedb5e46ac5729f3b66c8efefbc6d4a@ec2-54-160-161-214.compute-1.amazonaws.com:5432/d9bm3n25k10aka";
-var pgClient = new pg.Client(connectionString);
 
-/* Async function + await promise fixes the issue by setting a delay */
-async function con() {
-	
-	let promise = new Promise((resolve, reject) => {
-		setTimeout(() => resolve(pgClient.connect() ), 1000)
-	})
+app.use(session({
+	secret: 'top secret code!',
+	resave: true,
+	saveUninitialized: true
+}));
 
-	let result = await promise;
+// ___________________________CLEARDB_______________________________________________________________________________________________
 
-	alert(result);
+// mysql://b17b3063986ea6:e550d2df@us-cdbr-east-02.cleardb.com/heroku_135761bbf9978a7?reconnect=true
+
+// To connect to database via mysql command line
+// mysql --host=us-cdbr-east-02.cleardb.com --user=b17b3063986ea6 --password=e550d2df --reconnect heroku_135761bbf9978a7
+
+var connection = mysql.createPool({
+  host: "us-cdbr-east-02.cleardb.com",
+  user: "b17b3063986ea6",
+  password: "e550d2df",
+  database: "heroku_135761bbf9978a7"
+});
+module.exports = connection;
+
+// _________________________________________________________________________________________________________________________________
+
+
+app.post('/create-account', function(req, res){
+	let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
+	let data = [req.body.username, req.body.password];
+	connection.query(statement, data, function(error, result){
+		if(error) throw error;
+		console.log(statement);
+		res.redirect('/home');
+	});
+});
+
+// grabs the username/password from login and checks to see if the user is valid
+app.post('/login', async function(req, res){
+	let doesUserExist = await checkUser(req.body.username);
+	let passwordMatch = await checkPassword(req.body.password);
+	if(passwordMatch){
+		req.session.authenticated = true;
+		req.session.user = doesUserExist[0].username;
+
+		res.redirect('/home');
+	} else {
+		res.render('login', {error: true});
+	}
+});
+
+// Grabs the username in the table
+function checkUser(username){
+	let statement = 'SELECT * FROM user_table WHERE username=?';
+	return new Promise(function(resolve, reject){
+		connection.query(statement, [username], function(error, results){
+			if(error) throw error;
+			resolve(results);
+		});
+	}
 }
-// ________________________________________________________________________________________________________________________________
+// Grabs the password in the table
+// function checkPassword(password){
+// 	return new Promise(function(resolve, reject){
+// 		// Use bcrypt to compare password?
+// 	})
+// }
+
+
+
 
 
 // _________________________________________Query Functions_______________________________________________________________________________
@@ -97,23 +148,10 @@ app.get("/*", function(req, res){
 // required server
 app.listen(process.env.PORT || 3000, function(){
 	console.log("Server is running...");
-	// instantiate();
-	// var output = callToTest.showAllProduct.call(product_table);
-	// alert(output);
-		// callback here 
-	const text = 'INSERT INTO product_table(product_id, name, price, details, inventory, img_path) VALUES($1, $2, $3, $4, $5, $6) RETURNING *'
-	const values = ['v1', 'v2', 'v3', 'v4', 'v5', 'v6']
-	pgClient.query(text, values, (err, res) => {
-		if(err){
-			console.log(err.stack)
-		} else {
-			console.log(res.rows[0])
-		}
-	})
-	//promise here
 });
 
 
+// LEAVE BELOW COMMENTED OUT, We may use it for later
 
 // _____________ DB TESTING ___________________________________ 
 // index.js was the only thing not saved to stash for some reason
@@ -127,61 +165,60 @@ app.listen(process.env.PORT || 3000, function(){
 
 // function instantiate(){
 	
-	//Tables
-var product_table = {
-	product_id: "product_id",
-	name: "product_name",
-	price: "price",
-	details: "details",
-	inventory: "inventory",
-	img_path: "img_path"
-}
-var user_table = {
-	user_id: "user_id",
-	username: "username",
-	password: "password",
-	product_bought_id: "product_bought_id"
-}
-// var callToTest = {
-// 	insert: function(){
-// 		// if(tableName == product_table){
-// 		// 	// pgClient.con
-// 		// 	// INSERT INTO product_table(c1, c2, ...) VALUES(v1, v2, ...) RETURNING *;
-			
-// 		// 	// callback here 
-// 		// 	pgClient.query('INSERT INTO product_table(product_id, name, price, details, inventory, img_path) VALUES("v1", "v2", "v3", "v4", "v5", "v6")RETURNING *',
-// 		// 		(err, res) => {
-// 		// 		if(err){
-// 		// 			console.log(err.stack)
-// 		// 		} else {
-// 		// 			console.log(res.rows[0])
-// 		// 		}
-// 		// 	});
+// 	var callToTest = {
+// 		insert: function (tableName){
+// 			if(tableName == product_table){
+// 				// pgClient.con
+// 				// INSERT INTO product_table(c1, c2, ...) VALUES(v1, v2, ...) RETURNING *;
+// 				const text = "INSERT INTO product_table(product_id, name, price, details, inventory, img_path) VALUES($1, $2, $3, $4, $5, $6) RETURNING *";
+// 				const values = ['v1', 'v2', 'v3', 'v4', 'v5', 'v6'];
+				
+// 				async function q() {
+	
+// 					let promise = new Promise((resolve, reject) => {
+// 						setTimeout(() => resolve(pgClient.query(test, values)), 1000)
+// 					})
 
-// 		// 	//promise here
+// 					let result = await promise;
+
+// 					alert(result);
+// 				}
+// 				q();
+
+// 				// pgClient.query((test, values), function(error,found){
+// 			 //    	var products = null;
+// 			 //    	if(error) throw error;
+// 				// 	if(found.length){
+// 				// 		return found; // this gets us a list of products that have the keyword in their name
+// 				// 	}
+//     // 			});
+// 				//promise here
+// 		// 	}
 // 		// }
-// 	}
-// 	// update: function (tableName){
 
-// 	// }
-// 	// delete: function (tableName){
-
-// 	// }
-// 	showAllProduct: function(){
-// 		// SELECT * FROM product_table
-// 		return this.product_id + " " +
-// 				this.name + " " +
-// 				this.price + " " +
-// 				this.details + " " + 
-// 				this.inventory + " " + 
-// 				this.img_path + "\n" ;
+// 		showAllProduct: function (product_table){
+// 			return this.product_id + " " + this.name + " " + this.price + " " + this.details + " " + this.inventory + " " + this.img_path + "\n" ;
+// 		}
 // 	} 
-// 	showAllUser: function (){
-// 		return this.user_id + " " + 
-// 				this.username + " " + 
-// 				this.password + " " + 
-// 				product_bought_id + "\n";
 
+// 	// }
+// 	var product_table = {
+// 		product_id: "product_id",
+// 		name: "product_name",
+// 		price: "price",
+// 		details: "details",
+// 		inventory: "inventory",
+// 		img_path: "img_path"
 // 	}
+// 	var user_table = {
+// 		user_id: "user_id",
+// 		username: "username",
+// 		password: "password",
+// 		product_bought_id: "product_bought_id"
+// 	}
+// 			//Tables
+
+// 	console.log(callToTest.showAllProduct.call(product_table));
+// 	// console.log(callToTest.insert.call(product_table));
+// 	// callToTest.insert.call(product_table);
 // }
-// 
