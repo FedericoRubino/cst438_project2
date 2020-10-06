@@ -66,6 +66,11 @@ app.get("/login", function(req, res){
 	res.render("login");
 });
 
+// Login
+app.get("/create-account", function(req, res){
+	res.render("create-account");
+});
+
 // product details
 app.get("/product-details", function(req, res){
 	res.render("product-details", {productPath:req.query.productID});
