@@ -61,7 +61,7 @@ function checkUser(username){
 			if(error) throw error;
 			resolve(results);
 		});
-	}
+	});
 }
 // Grabs the password in the table
 // function checkPassword(password){
