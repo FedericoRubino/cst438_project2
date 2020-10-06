@@ -62,6 +62,11 @@ app.get("/login", function(req, res){
 	res.render("login");
 });
 
+// Login Authentication TODO: make controller
+app.post('/login', function(req, res){
+	res.send("Successful to POST @ login '/login'!\n");
+ });
+
 // product details
 app.get("/product-details", function(req, res){
 	res.render("product-details", {productPath:req.query.productID});
