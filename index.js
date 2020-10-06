@@ -66,7 +66,7 @@ app.get("/login", function(req, res){
 	res.render("login");
 });
 
-// Login
+// Create Account
 app.get("/create-account", function(req, res){
 	res.render("create-account");
 });
