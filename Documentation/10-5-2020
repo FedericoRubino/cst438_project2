@@ -1,0 +1,7 @@
+Postgres is causing lots of problems primarily from what I believe to be pgsql compatibility with javascript and the pgsql syntax. -Jon
+
+POSTGRES SCAPPRED 10-5-2020 
+=> 
+ClearDB
+
+ClearDB and mySQL installed to app. user_table and product_table are created but some of the variables in the tables are not created because I have to figure out mysql syntax now. -Jon
