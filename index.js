@@ -4,6 +4,9 @@ var session = require('express-session')
 var bodyParser = require("body-parser");
 var mysql = require('mysql');
 
+// need this in order to use req.body.xyz
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
 
 app.use(session({
 	secret: 'top secret code!',
@@ -32,9 +35,7 @@ var user_count = 0;
 
 
 app.post('/register-account', function(req, res){
-	let statement = 'INSERT INTO user_table (username, password, user_id) VALUES (?, ?, ?)';
-	// getting that info req.query.username  /////   req.body.username
-	let data = [req.query.username, req.query.password, user_count];
+	let statement = 'INSERT INTO user_table (username, password, user_id) VALUES (?, ?, ?)';let data = [req.query.username, req.query.password, user_count];
 	connection.query(statement, data, function(error, result){
 		if(error) throw error;
 		if(result){
@@ -42,19 +43,30 @@ app.post('/register-account', function(req, res){
 		}
 		console.log(result);
 		console.log(data);
-
-		res.render('/home');
+        // should have not have slashes
+		res.render('home');
 	});
 });
 
 // grabs the username/password from login and checks to see if the user is valid
 app.post('/login', async function(req, res){
+	console.log("In login post, see username logged below.");
+	console.log(req.body.username);
 	let doesUserExist = await checkUser(req.body.username);
-	let passwordMatch = await checkPassword(req.body.password);
+	// the if below checkes if doesUserExist returns empty array
+	// if an empty array this means user does not exist
+	// reload to login for now
+	if (doesUserExist.length === 0) {
+		res.render('login', {error: true});
+		return;
+	}
+	// previously:    await checkPassword(req.body.password)
+	// notided checkPassword was commented out so I removed it
+	// feel free to change it back though
+	let passwordMatch =  req.body.password;
 	if(passwordMatch){
 		req.session.authenticated = true;
 		req.session.user = doesUserExist[0].username;
-
 		res.redirect('/home');
 	} else {
 		res.render('login', {error: true});
