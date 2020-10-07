@@ -35,7 +35,7 @@ var user_count = 0;
 
 
 app.post('/register-account', function(req, res){
-	let statement = 'INSERT INTO user_table (username, password, user_id) VALUES (?, ?, ?)';let data = [req.query.username, req.query.password, user_count];
+	let statement = 'INSERT INTO user_table (username, password, user_id) VALUES (?, ?, ?)';
 	let data = [req.body.username, req.body.password, user_count];
 	connection.query(statement, data, function(error, result){
 		if(error) throw error;
