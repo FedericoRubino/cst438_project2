@@ -26,7 +26,7 @@ var connection = mysql.createPool({
   user: "b17b3063986ea6",
   password: "e550d2df",
   database: "heroku_135761bbf9978a7"
-});
+}); 
 module.exports = connection;
 
 // _________________________________________________________________________________________________________________________________
@@ -35,7 +35,8 @@ var user_count = 0;
 
 
 app.post('/register-account', function(req, res){
-	let statement = 'INSERT INTO user_table (username, password, user_id) VALUES (?, ?, ?)';let data = [req.query.username, req.query.password, user_count];
+	let statement = 'INSERT INTO user_table (username, password, user_id) VALUES (?, ?, ?)';
+	let data = [req.body.username, req.body.password, user_count];
 	connection.query(statement, data, function(error, result){
 		if(error) throw error;
 		if(result){
@@ -43,7 +44,7 @@ app.post('/register-account', function(req, res){
 		}
 		console.log(result);
 		console.log(data);
-        // should have not have slashes
+        // should have not have slash
 		res.render('home');
 	});
 });
