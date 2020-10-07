@@ -44,7 +44,7 @@ app.post('/register-account', function(req, res){
 		}
 		console.log(result);
 		console.log(data);
-        // should have not have slashes
+        // should have not have slash
 		res.render('home');
 	});
 });
