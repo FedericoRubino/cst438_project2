@@ -27,15 +27,23 @@ var connection = mysql.createPool({
 module.exports = connection;
 
 // _________________________________________________________________________________________________________________________________
+var user_count = 0;
 
 
-app.post('/create-account', function(req, res){
-	let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
-	let data = [req.body.username, req.body.password];
+
+app.post('/register-account', function(req, res){
+	let statement = 'INSERT INTO user_table (username, password, user_id) VALUES (?, ?, ?)';
+	// getting that info req.query.username  /////   req.body.username
+	let data = [req.query.username, req.query.password, user_count];
 	connection.query(statement, data, function(error, result){
 		if(error) throw error;
-		console.log(statement);
-		res.redirect('/home');
+		if(result){
+			user_count++;
+		}
+		console.log(result);
+		console.log(data);
+
+		res.render('/home');
 	});
 });
 
