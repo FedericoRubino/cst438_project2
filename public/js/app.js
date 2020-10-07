@@ -16,7 +16,7 @@ paths = ['images\\Core\\CPU\\CPU', 'images\\Core\\MotherBoard\\Motherboard','ima
 var createCard = function(source, content, title, path){
     return "<div class='col-sm'> " +
                     "<div class='card' style='width: 18rem;'> " +
-                        "<img class='card-img-top' src="+ source +" alt='Card image cap: "+ id +"'> " +
+                        "<img class='card-img-top' src="+ source +" alt='Card image cap: "+ title +"'> " +
                             "<div class='card-body'> " +
                                 "<h5 class='card-title'>"+ title +"</h5> " +
                                 "<p class='card-text'>"+ content +".</p> " +
