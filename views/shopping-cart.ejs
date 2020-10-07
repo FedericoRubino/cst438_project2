@@ -4,11 +4,43 @@
         <main>
           
             <div id="content">
-            <h1> Shopping Cart</h1>
+            <h1 style="margin-left:15px"> Shopping Cart</h1> <!-- Page header leave here -->
+            <hr style="width:75%; text-align:left; margin-left:10px; padding-bottom: 20px"> <!-- horizontal line leave here -->
 
+            <!-- repeat as needed based on products -->
+            <div class="jumbotron" style="padding: 10px; margin: 15px; width:81%">
+            	 <div class="row">
+            	 	<!-- responsive columns -->
+            	 	<!-- column with image and name and quantity use js to insert -->
+            	 	<div class="col-sm-8">
+            	 		<div style="margin-right: 10px;">
+            	 			<img style ="float: left; width=400px; height=400px" src="images/Accessories/Adapters/Adapter1.jpg">
+            	 			<div class="content-heading"><h3>Product Name</h3></div>
+            	 			<p>Quantity: </p>  
+            	 		</div>	
+            	 	</div> 
+  					<div class="col-sm-4">
+  				 		<p style ="float: left; margin-top: 40px"> Price: $ </p>
+            	 		<button style="margin-right:40px; margin-top: 40px" type="remove" class="btn btn-danger float-right">Remove Item</button>
+            	 	</div>	
+				</div>
+                
             </div>
-                 
-          
+                <div class="row">
+                    <div class="col-sm-8"></div>
+                    <!-- Checkout leave here update total price with js -->
+                    <div class="col-sm-2">
+                        <div class="jumbotron" style="padding: 10px; margin-right: 12px; margin-top: 15px;">
+                            <h5>Total: $ <br><br></h5>
+                            <div class="text-center">
+                            <button type="button" class="btn btn-success">Checkout</button>
+                            </div>
+                        </div>
+                        <!-- clear cart return to homepage update items available add to users recent orders? Javascript popup success -->
+                    <div class="col-sm-2"></div>
+                    </div>
+                </div>
+            
         </main>
 
 
