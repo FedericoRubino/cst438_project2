@@ -6,7 +6,10 @@ var mysql = require('mysql');
 
 // need this in order to use req.body.xyz
 app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies | by specifying extended: true, object can be any type;
+
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
 
 app.use(session({
 	secret: 'top secret code!',
@@ -30,21 +33,14 @@ var connection = mysql.createPool({
 module.exports = connection;
 
 // _________________________________________________________________________________________________________________________________
-var user_count = 0;
-
-
 
 app.post('/register-account', function(req, res){
-	let statement = 'INSERT INTO user_table (username, password, user_id) VALUES (?, ?, ?)';
-	let data = [req.body.username, req.body.password, user_count];
+	let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
+	let data = [req.body.username, req.body.password];
 	connection.query(statement, data, function(error, result){
 		if(error) throw error;
-		if(result){
-			user_count++;
-		}
-		console.log(result);
-		console.log(data);
-        // should have not have slash
+		else console.log(result);
+		console.log(data);;
 		res.render('home');
 	});
 });
@@ -114,9 +110,6 @@ var findIdBySearchValue = function(keyword){
 // ________________________________________________________________________________________________________________________________
 
 
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({extended:true}));
 
 // Home
 app.get("/", function(req, res){
