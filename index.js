@@ -4,12 +4,9 @@ var session = require('express-session')
 var bodyParser = require("body-parser");
 var mysql = require('mysql');
 
-<<<<<<< Updated upstream
-=======
 // need this in order to use req.body.xyz
 app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies, by setting extended: true, object can be any type
->>>>>>> Stashed changes
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies | by specifying extended: true, object can be any type;
 
 app.use(session({
 	secret: 'top secret code!',
@@ -29,43 +26,43 @@ var connection = mysql.createPool({
   user: "b17b3063986ea6",
   password: "e550d2df",
   database: "heroku_135761bbf9978a7"
-});
+}); 
 module.exports = connection;
 
 // _________________________________________________________________________________________________________________________________
 
 
-<<<<<<< Updated upstream
-app.post('/create-account', function(req, res){
-=======
 app.post('/register-account', function(req, res){
->>>>>>> Stashed changes
 	let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
 	let data = [req.body.username, req.body.password];
 	connection.query(statement, data, function(error, result){
 		if(error) throw error;
-<<<<<<< Updated upstream
-		console.log(statement);
-		res.redirect('/home');
-=======
-		if(result){
-			console.log(result)
-		}
-		// console.log(data);
+		else console.log(result);
+		console.log(data);;
         // should have not have slash
 		res.render('home');
->>>>>>> Stashed changes
 	});
 });
 
 // grabs the username/password from login and checks to see if the user is valid
 app.post('/login', async function(req, res){
+	console.log("In login post, see username logged below.");
+	console.log(req.body.username);
 	let doesUserExist = await checkUser(req.body.username);
-	let passwordMatch = await checkPassword(req.body.password);
+	// the if below checkes if doesUserExist returns empty array
+	// if an empty array this means user does not exist
+	// reload to login for now
+	if (doesUserExist.length === 0) {
+		res.render('login', {error: true});
+		return;
+	}
+	// previously:    await checkPassword(req.body.password)
+	// notided checkPassword was commented out so I removed it
+	// feel free to change it back though
+	let passwordMatch =  req.body.password;
 	if(passwordMatch){
 		req.session.authenticated = true;
 		req.session.user = doesUserExist[0].username;
-
 		res.redirect('/home');
 	} else {
 		res.render('login', {error: true});
@@ -130,6 +127,16 @@ app.get("/clear-account", function(req, res){
 app.get("/login", function(req, res){
 	res.render("login");
 });
+
+// Create Account
+app.get("/create-account", function(req, res){
+	res.render("create-account");
+});
+
+// Login Authentication TODO: make controller
+app.post('/login', function(req, res){
+	res.send("Successful to POST @ login '/login'!\n");
+ });
 
 // product details
 app.get("/product-details", function(req, res){
