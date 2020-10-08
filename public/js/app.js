@@ -13,12 +13,12 @@ paths = ['images\\Core\\CPU\\CPU', 'images\\Core\\MotherBoard\\Motherboard','ima
 //                     "</div> " +
 //                 "</div>";
 // helper function to create the cards
-var createCard = function(source, content, id, path){
+var createCard = function(source, content, title, path){
     return "<div class='col-sm'> " +
                     "<div class='card' style='width: 18rem;'> " +
-                        "<img class='card-img-top' src="+ source +" alt='Card image cap: "+ id +"'> " +
+                        "<img class='card-img-top' src="+ source +" alt='Card image cap: "+ title +"'> " +
                             "<div class='card-body'> " +
-                                "<h5 class='card-title'>"+ id +"</h5> " +
+                                "<h5 class='card-title'>"+ title +"</h5> " +
                                 "<p class='card-text'>"+ content +".</p> " +
                                 "<a href='product-details?productID="+ path +"' class='btn btn-primary'>Product Details</a> " +
                             "</div> " +
@@ -27,7 +27,7 @@ var createCard = function(source, content, id, path){
 }
 
 
-// print individual imagesin the style that Anna designed
+// print individual images in the style that Anna designed
 var showImagesCards = function(value) {
     for (var i = 1; i < 4; i++) {
         var source = paths[value]+i+".jpg";

@@ -34,7 +34,6 @@ module.exports = connection;
 
 // _________________________________________________________________________________________________________________________________
 
-
 app.post('/register-account', function(req, res){
 	let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
 	let data = [req.body.username, req.body.password];
@@ -42,7 +41,6 @@ app.post('/register-account', function(req, res){
 		if(error) throw error;
 		else console.log(result);
 		console.log(data);;
-        // should have not have slash
 		res.render('home');
 	});
 });

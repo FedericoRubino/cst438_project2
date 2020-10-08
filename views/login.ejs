@@ -3,12 +3,31 @@
 	
         <main>
           
-            <div id="content">
-            <h1> Login </h1>
+            <div class="jumbotron col-lg-6 col-md-6 col-sm-6 col-xs-6 offset-3 float-md-center" style="background-color: #ffff; border-style: solid; border-color: #e9ecef; width:50%; margin-bottom: 5px; margin-top: 50px;">
 
-            </div>
-                 
-          
+  				<form action="/login" method="POST" class="was-validated">
+            <div class="text-center"><img src="images/Logo-reversed.png" alt="" height="140" width="77"></div>
+  					<div class="form-group">
+    					<label for="username">Username:</label>
+    					<input type="text" class="form-control" id="username" placeholder="Enter username" name="username" required>
+    					<div class="valid-feedback">Valid.</div>
+    					<div class="invalid-feedback">Please fill out this field.</div>
+  					</div>
+  					<div class="form-group">
+    					<label for="password">Password:</label>
+    						<input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
+    						<div class="valid-feedback">Valid.</div>
+    						<div class="invalid-feedback">Please fill out this field.</div>
+ 				    </div>
+  					<div class="text-center">
+  					<button type="submit" class="btn btn-success">Sign in</button>
+  					</div>
+				</form>
+			</div>
+			<div class="jumbotron col-lg-6 col-md-6 col-sm-6 col-xs-6 offset-3 float-md-center" style="padding: 10px; width:50%;">  				
+ 				 <p style="margin-top: 4px; margin-bottom: 1px">New User? <u><a class=".text-primary" style="text-decoration: underlined; text-decoration-color:#007bff!important" href="/create-account">Create an account<a></u></p> 
+			</div>
+           
         </main>
 
 
