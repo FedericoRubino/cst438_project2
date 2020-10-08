@@ -8,6 +8,9 @@ var mysql = require('mysql');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies | by specifying extended: true, object can be any type;
 
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+
 app.use(session({
 	secret: 'top secret code!',
 	resave: true,
@@ -109,9 +112,6 @@ var findIdBySearchValue = function(keyword){
 // ________________________________________________________________________________________________________________________________
 
 
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({extended:true}));
 
 // Home
 app.get("/", function(req, res){
