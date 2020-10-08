@@ -4,6 +4,12 @@ var session = require('express-session')
 var bodyParser = require("body-parser");
 var mysql = require('mysql');
 
+<<<<<<< Updated upstream
+=======
+// need this in order to use req.body.xyz
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies, by setting extended: true, object can be any type
+>>>>>>> Stashed changes
 
 app.use(session({
 	secret: 'top secret code!',
@@ -29,13 +35,26 @@ module.exports = connection;
 // _________________________________________________________________________________________________________________________________
 
 
+<<<<<<< Updated upstream
 app.post('/create-account', function(req, res){
+=======
+app.post('/register-account', function(req, res){
+>>>>>>> Stashed changes
 	let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
 	let data = [req.body.username, req.body.password];
 	connection.query(statement, data, function(error, result){
 		if(error) throw error;
+<<<<<<< Updated upstream
 		console.log(statement);
 		res.redirect('/home');
+=======
+		if(result){
+			console.log(result)
+		}
+		// console.log(data);
+        // should have not have slash
+		res.render('home');
+>>>>>>> Stashed changes
 	});
 });
 
