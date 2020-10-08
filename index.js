@@ -38,8 +38,9 @@ app.post('/register-account', function(req, res){
 	let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
 	let data = [req.body.username, req.body.password];
 	connection.query(statement, data, function(error, result){
-		if(error) throw error;
-		else console.log(result);
+		if(error) { throw error; }
+		else if(grecaptcha.getResponse() == ' ') { alert('Please check the recaptcha'); }
+		else { console.log(result); }
 		console.log(data);;
 		res.render('home');
 	});
