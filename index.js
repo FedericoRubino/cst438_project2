@@ -35,15 +35,15 @@ module.exports = connection;
 // _________________________________________________________________________________________________________________________________
 
 app.post('/register-account', function(req, res){
-	if(grecaptcha.getResponse() == ' ')  { alert('Please check the recaptcha'); return; } 
+	if(grecaptcha.getResponse() == ' ')  { alert('Please check the recaptcha'); }
 	else { let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
-	let data = [req.body.username, req.body.password]; }
+	let data = [req.body.username, req.body.password]; 
 	connection.query(statement, data, function(error, result){
 		if(error) throw error; 
 		else console.log(result); 
 		console.log(data);;
 		res.render('home');
-	});
+	}); }
 });
 
 // grabs the username/password from login and checks to see if the user is valid
