@@ -35,9 +35,9 @@ module.exports = connection;
 // _________________________________________________________________________________________________________________________________
 
 app.post('/register-account', function(req, res){
-	let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
-	let data = [req.body.username, req.body.password];
-	// if(grecaptcha.getResponse() == ' ')  { alert('Please check the recaptcha'); return; } 
+	if(grecaptcha.getResponse() == ' ')  { alert('Please check the recaptcha'); return; } 
+	else { let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
+	let data = [req.body.username, req.body.password]; }
 	connection.query(statement, data, function(error, result){
 		if(error) throw error; 
 		else console.log(result); 
