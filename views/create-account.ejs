@@ -21,19 +21,16 @@
     						has a number, and has one special character.</p></div>
  				    </div>
   						<h5>Verify your Account</h5>
-              <form action="?" method="POST">
+              <div class="form-group">
   						<div style="padding-bottom: 20px" class="g-recaptcha" data-sitekey="6LfIstMZAAAAANii8kUXS09b84tPpTzafOOAXmj3"></div>
-              <br/>
-              <input type="submit" value="Submit">
+               <input class="form-control d-none" data-recaptcha="true" required data-error="Please complete the Captcha">
+              </div>
               <div class="text-center">
   						<button style="margin-top: 15px" type="submit" class="btn btn-primary">Create Acount</button>
               </div>
-              </form>
 			</form>
-      <script src=""
-      </script>
 			</div>
-           
+        
         </main>
 
 <%- include('templates/footer'); -%>
