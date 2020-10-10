@@ -109,10 +109,64 @@ var findIdBySearchValue = function(keyword){
 }
 // ________________________________________________________________________________________________________________________________
 
+var paths = ['images\\Core\\CPU\\CPU', 'images\\Core\\MotherBoard\\Motherboard','images\\Accessories\\HardDrives\\HardDrive','images\\Accessories\\USB\\USB',
+		 'images\\Accessories\\Cables\\Cable', 'images\\Accessories\\Adapters\\Adapter'];
+var names = [["I9-9900K","I7-10700K","I9-10900K"],["MSI Gaming Edge WIFI Z490 Motherboard", "ASUS ROG STRIX Z490 Motherboard", "AMD AM4 (3rd Gen Ryzen) ATX Motherboard"],
+		 ["Blackhole", "Wonderland", "Floppy"],["Thumb", "Jump Drives", "Data stick"],["Coaxial", "Fibre Optics", "Shielded Cable"],
+		 ["3-port Tripp Lite 3-port USB Cable", "Dell Adapter USB-C", "USB-C Hub Multiport Adapter"]];
+var prices = [[300.99, 400.99, 550,50],[200, 250,350.60],[100,89.99,200],[20,5,1.99],[10.50,15,30.89],[10.50,15,20]]
+var details = [["CPU","CPU","CPU"],["Motherboard","Motherboard","Motherboard"],["HardDrive","HardDrive","HardDrive"],["USB","USB","USB"],["Cable","Cable","Cable"],["Adapter","Adapter","Adapter"]]
+
+
+
+// clears the product table
+var nukeProductTable = function(){
+	var statement = "DELETE FROM product_table";
+	connection.query(statement, function(error, results){
+		if(error) throw error;
+	});
+}
+
+// checks if product table has any rows
+var checkDBFull = function(){
+	var statement = "SELECT * FROM product_table";
+	connection.query(statement, function(error, results){
+		if(error) throw error;
+		if(results.length > 0){
+			return true;
+		} else {
+			return false;
+		}
+	});
+}
+
+// fills the product table with products
+var populateDB = function(){
+	if(checkDBFull()){return;}
+	return new Promise(function(resolve, reject){
+		var insert_stmt = "INSERT INTO product_table ('product_name', 'price', 'details', 'inventory', 'img_path') VALUES (?,?,?,?,?)";
+		for (var i = 0; i < 6; i++) {
+			var path = paths[i];
+			var names_ = names[i];
+			var prices_ = prices[i];
+			var details_ = details[i];
+			for(var j=1;j<4;j++){
+				var img_path = path + i + ".jpg";
+				data = [names_[i-1],prices_[i-1],details_[i-1],10,img_path];
+				connection.query(insert_stmt, data, function(error, results){
+					if(error) throw error;
+					resolve(results);
+				});
+			}
+		}
+	});
+}
 
 
 // Home
 app.get("/", function(req, res){
+	
+	populateDB()
 	res.render("home");
 });
 
