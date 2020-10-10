@@ -2,6 +2,7 @@
         <main>
 			<div id="content">
                 <h2 style="margin: 40px;">All Our Products</h2>
+                <div class="row"  id="images">
 
 	                <%if (products.length > 0){ %>
 	                	<%for(var i = 0; i < products.length; i++) { %>
@@ -11,7 +12,7 @@
 			                            <div class='card-body'> 
 			                                <h5 class='card-title'><%=products[i].product_name%></h5> 
 			                                <p class='card-text'><%=products[i].details%></p> 
-			                                <a href='product-details?productID=<%=products[i].img_path%>' class='btn btn-primary'>Product Details</a> 
+			                                <a href='product-details?productID=<%=products[i].product_id%>' class='btn btn-primary'>Product Details</a> 
 			                            </div> 
 			                    </div> 
 			                </div>
@@ -19,6 +20,7 @@
 	            	<%} else {%>
 
 		            <% } %>
+		        </div>
                 <h2 style="margin: 40px;">About Us</h2>
 			</div>
         </main>

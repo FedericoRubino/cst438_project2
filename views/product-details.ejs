@@ -1,12 +1,18 @@
 <%- include('templates/header'); -%>
         <main>
             <div id="content">
-            <h1> Product Details </h1>
-
-            	<div id="image">
-            		<img id="largeImage" src="<%=productPath%>" ></div>
-            	</div>
-
+	            <h1> Product Details </h1>
+	            <div class="row">
+	            	<div id="image">
+	            		<div id="title"><%=product[0].product_name%></div>
+	            		<img id="largeImage" src="<%=product[0].img_path%>" ></div>
+		            	<div>
+			            	<div>Desciption: <%=product[0].product_name%></div>
+			            	<div>Quantitiy: <%=product[0].inventory%></div>
+			            	<div>Price: <%=product[0].price%></div>
+		            	</div>
+	            	</div>
+				</div>
             </div>
         </main>
 
