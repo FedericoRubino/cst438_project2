@@ -273,13 +273,17 @@ app.get("/search-action", function(req, res) {
 
 // after pressing the add to cart table
 app.get("/add-to-cart",function(req,res){
-	var product_id_ = req.query.productID;
-	var insert_stmt = "INSERT INTO order_table (user_id, product_id) VALUES (?,?)";
-	var data = [req.session.user.user_id, product_id_];
-	connection.query(insert_stmt, data, function(error, results){
-		if(error) throw error;
-	});
-	res.redirect("/shopping-cart");
+	if(req.session.user === undefined){
+		res.render("login");
+	} else {
+		var product_id_ = req.query.productID;
+		var insert_stmt = "INSERT INTO order_table (user_id, product_id) VALUES (?,?)";
+		var data = [req.session.user.user_id, product_id_];
+		connection.query(insert_stmt, data, function(error, results){
+			if(error) throw error;
+		});
+		res.redirect("/shopping-cart");
+	}
 });
 
 // gets all of the items that a user has in their shopping cart
