@@ -3,11 +3,22 @@
             <div id="content">
                 <h1 style="margin:40px;"> Product Page </h1>
                 <div class="row"  id="images">
-                    <script>
-                        // showImages(<%=productID%>);
-                        showImagesCards(<%=productID%>);
-                    </script>   
-                    <div id="test"></div>
+                    <%if (products.length > 0){ %>
+                        <%for(var i = 0; i < products.length; i++) { %>
+                            <div class='col-sm'> 
+                                <div class='card' style='width: 18rem;'> 
+                                    <img class='card-img-top' src="<%=products[i].img_path%>" alt='Card image cap: "<%=products[i].product_name%>"'> 
+                                        <div class='card-body'> 
+                                            <h5 class='card-title'><%=products[i].product_name%></h5> 
+                                            <p class='card-text'><%=products[i].details%></p> 
+                                            <a href='product-details?productID=<%=products[i].product_id%>' class='btn btn-primary'>Product Details</a> 
+                                        </div> 
+                                </div> 
+                            </div>
+                        <%}%>
+                    <%} else {%>
+
+                    <% } %>
                 </div>
             </div>
         </main>

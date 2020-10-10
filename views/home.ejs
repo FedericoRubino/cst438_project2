@@ -2,15 +2,25 @@
         <main>
 			<div id="content">
                 <h2 style="margin: 40px;">All Our Products</h2>
-                <div id="images">
-	                <p id="p1" style="margin-left: 40px;"></p>
-	                <p id="p2" style="margin-left: 40px;"></p>
-	                <p id="p3" style="margin-left: 40px;"></p>
-	                <script>
-	                	// showImagesHome();
-	                	showButtonImagesHome()
-	                </script>
-                </div>
+                <div class="row"  id="images">
+
+	                <%if (products.length > 0){ %>
+	                	<%for(var i = 0; i < products.length; i++) { %>
+							<div class='col-sm'> 
+			                    <div class='card' style='width: 18rem;'> 
+			                        <img class='card-img-top' src="<%=products[i].img_path%>" alt='Card image cap: "<%=products[i].product_name%>"'> 
+			                            <div class='card-body'> 
+			                                <h5 class='card-title'><%=products[i].product_name%></h5> 
+			                                <p class='card-text'><%=products[i].details%></p> 
+			                                <a href='product-details?productID=<%=products[i].product_id%>' class='btn btn-primary'>Product Details</a> 
+			                            </div> 
+			                    </div> 
+			                </div>
+	                	<%}%>
+	            	<%} else {%>
+
+		            <% } %>
+		        </div>
                 <h2 style="margin: 40px;">About Us</h2>
 			</div>
         </main>
