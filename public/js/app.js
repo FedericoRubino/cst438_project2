@@ -20,7 +20,7 @@ var createCard = function(source, content, title, path){
                             "<div class='card-body'> " +
                                 "<h5 class='card-title'>"+ title +"</h5> " +
                                 "<p class='card-text'>"+ content +".</p> " +
-                                "<a href='product-details?productID="+ path +"' class='btn btn-primary'>Product Details</a> " +
+                                "<a href='product-details?productID="+ path +'.jpg'+"' class='btn btn-primary'>Product Details</a> " +
                             "</div> " +
                     "</div> " +
                 "</div>";
@@ -47,6 +47,10 @@ var showButtonImagesHome = function() {
             document.getElementById("p"+i).innerHTML += "<a href='product-details?productID="+paths[k]+i+"'> <img src='"+paths[k]+i+".jpg' width=50> </a>";
         }
     }
+}
+
+var homeDisplay = function(product) {
+    document.getElementById("images").innerHTML += createCard(product.img_path, product.details,product.product_name , product.img_path);
 }
 
 
@@ -81,40 +85,40 @@ var showImages = function(value) {
 }
 
 function Dictionary() {
-        this.datastore = [];
+    this.datastore = [];
 
-        this.add = function(key, value) {
-            if(key && value) {
-                this.datastore.push({
-                    key: key,
-                    value: value
-                });
+    this.add = function(key, value) {
+        if(key && value) {
+            this.datastore.push({
+                key: key,
+                value: value
+            });
+            return this.datastore;
+        }
+    };
+
+    this.removeAt = function(key) {
+        for(var i = 0; i < this.datastore.length; i++ ) {
+            if(this.datastore[i].key === key) {
+                this.datastore.splice(this.datastore[i], 1);
                 return this.datastore;
             }
-        };
+        }
+        return this.datastore;
+    };
 
-        this.removeAt = function(key) {
-            for(var i = 0; i < this.datastore.length; i++ ) {
-                if(this.datastore[i].key === key) {
-                    this.datastore.splice(this.datastore[i], 1);
-                    return this.datastore;
-                }
+    this.findAt = function(key) {
+        for(var i = 0; i < this.datastore.length; i++) {
+            if (this.datastore[i] === key) {
+                return this.datastore[i].value;
             }
-            return this.datastore;
-        };
+        }
+        return this.datastore;
+    };
 
-        this.findAt = function(key) {
-            for(var i = 0; i < this.datastore.length; i++) {
-                if (this.datastore[i] === key) {
-                    return this.datastore[i].value;
-                }
-            }
-            return this.datastore;
-        };
+    this.size = function() {
+        return this.datastore.length;
+    };
 
-        this.size = function() {
-            return this.datastore.length;
-        };
-
-    }//Dictionary()
+}//Dictionary()
 
