@@ -20,7 +20,6 @@ app.use(session({
 // ___________________________CLEARDB_______________________________________________________________________________________________
 
 // mysql://b17b3063986ea6:e550d2df@us-cdbr-east-02.cleardb.com/heroku_135761bbf9978a7?reconnect=true
-
 // To connect to database via mysql command line
 // mysql --host=us-cdbr-east-02.cleardb.com --user=b17b3063986ea6 --password=e550d2df --reconnect heroku_135761bbf9978a7
 
@@ -34,6 +33,7 @@ module.exports = connection;
 
 // _________________________________________________________________________________________________________________________________
 
+// register user path
 app.post('/register-account', function(req, res){
 	let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
 	let data = [req.body.username, req.body.password]; 
@@ -49,7 +49,7 @@ app.post('/register-account', function(req, res){
 });
 
 
-// Grabs the username in the table
+// Grabs the user in the table with the given username
 function checkUser(username){
 	let statement = "SELECT * FROM user_table WHERE username='"+username+"'";
 	// console.log(statement);
@@ -73,10 +73,6 @@ function checkUser(username){
 
 // grabs the username/password from login and checks to see if the user is valid
 app.post('/login', async function(req, res){
-	// console.log("In login post, see username logged below.");
-	// console.log(req.body.username);
-	// console.log(req.body.password);
-
 	let currentUser = await checkUser(req.body.username);
 	// the if below checkes if currentUser returns empty array
 	// if an empty array this means user does not exist
@@ -90,7 +86,6 @@ app.post('/login', async function(req, res){
 	// notided checkPassword was commented out so I removed it
 	// feel free to change it back though
 	let passwordEntered =  req.body.password;
-
 	if(passwordEntered == currentUser[0].password){
 		req.session.authenticated = true;
 		req.session.user = currentUser[0]; // this will allow access to all the user info from anywhere
@@ -101,11 +96,6 @@ app.post('/login', async function(req, res){
 		res.render('login', {error: true});
 	}
 });
-
-
-
-
-
 
 var paths = ['images\\Core\\CPU\\CPU', 'images\\Core\\MotherBoard\\Motherboard','images\\Accessories\\HardDrives\\HardDrive','images\\Accessories\\USB\\USB','images\\Accessories\\Cables\\Cable', 'images\\Accessories\\Adapters\\Adapter'];
 var names = [["I9-9900K","I7-10700K","I9-10900K"],["MSI Gaming Edge WIFI Z490 Motherboard", "ASUS ROG STRIX Z490 Motherboard", "AMD AM4 (3rd Gen Ryzen) ATX Motherboard"],["Blackhole", "Wonderland", "Floppy"],["Thumb", "Jump Drives", "Data stick"],["Coaxial", "Fibre Optics", "Shielded Cable"],["3-port Tripp Lite 3-port USB Cable", "Dell Adapter USB-C", "USB-C Hub Multiport Adapter"]];
@@ -163,12 +153,12 @@ var populateDB = function(){
 // get all of the products
 var getAllProducts = function(callback,res) {
 	var statement = "SELECT * FROM product_table";
-		connection.query(statement, function(error, results){
-			if(error) throw error;
-			if(results.length > 0){
-				callback(results,res);
-			} 
-		});
+	connection.query(statement, function(error, results){
+		if(error) throw error;
+		if(results.length > 0){
+			callback(results,res);
+		} 
+	});
 }
 
 // using callback functions to over come the asynch issue
@@ -204,8 +194,6 @@ app.post('/login', function(req, res){
 	res.send("Successful to POST @ login '/login'!\n");
  });
 
-
-
 // get product by id w/ callback
 var getProductById = function(callback,res, product_id) {
 	var statement = "SELECT * FROM product_table where product_id = " +product_id;
@@ -220,7 +208,6 @@ var getProductById = function(callback,res, product_id) {
 // callback function for the product page
 // using callback functions to over come the asynch issue
 var renderProductPage = function(products,res){
-	// console.log	(products);
 	res.render("product-details", {product:products});
 } 
 
@@ -230,7 +217,6 @@ app.get("/product-details", function(req, res){
 	getProductById(renderProductPage,res,product_id_)
 	// res.render("product-details", {productPath:req.query.productID});
 });
-
 
 // get specific products w/ callback
 var getSpecificProducts = function(callback,res, product_n) {
@@ -246,7 +232,6 @@ var getSpecificProducts = function(callback,res, product_n) {
 // callback function for the product page
 // using callback functions to over come the asynch issue
 var renderProductDetails = function(products,res){
-	// console.log	(products);
 	res.render("product-page", {products:products});
 } 
 
@@ -268,7 +253,6 @@ var searchProducts = function(callback,res, search_val) {
 		} else {
 			res.redirect("/");
 		} 
-
 	});
 }
 
@@ -280,17 +264,52 @@ var renderProductDetailsSearch = function(products,res){
 } 
 // ________________________________________________________________________________________________________________________________
 
-
+//path to using the search functionality
 app.get("/search-action", function(req, res) {
     var keyword = req.query.search_field;
-    // console.log(keyword); // check if the search value gets passed successfully
     searchProducts(renderProductDetailsSearch,res,keyword)
     // res.render("product-page", {productID:id});
 });
 
+// after pressing the add to cart table
+app.get("/add-to-cart",function(req,res){
+	var product_id_ = req.query.productID;
+	var insert_stmt = "INSERT INTO order_table (user_id, product_id) VALUES (?,?)";
+	var data = [req.session.user.user_id, product_id_];
+	connection.query(insert_stmt, data, function(error, results){
+		if(error) throw error;
+	});
+	res.redirect("/shopping-cart");
+});
+
+// gets all of the items that a user has in their shopping cart
+var getCartItems = function(callback, currentUserId, res){
+	statement = "SELECT * FROM order_table NATURAL JOIN product_table WHERE user_id =" + currentUserId;
+	connection.query(statement,function(error,results){
+		if(error){ throw error;}
+		if(results.length > 0){
+			callback(res, results);
+		} else {
+			return null;
+		}
+
+	}); 
+}
+
+//callback function that renders the shopping-cart
+var renderShoppingCart = function(res, products){
+	// console.log(products);
+	res.render("shopping-cart", {products:products});
+
+}
+
+
 // shopping cart
 app.get("/shopping-cart", function(req, res){
-	res.render("shopping-cart");
+	var currentUserId = req.session.user.user_id;
+	getCartItems(renderShoppingCart,currentUserId,res);
+
+	// res.render("shopping-cart");
 });
 
 // user profile
@@ -303,12 +322,10 @@ app.get("/*", function(req, res){
 	res.render("error");
 });
 
-
 // required server
 app.listen(process.env.PORT || 3000, function(){
 	console.log("Server is running...");
 });
-
 
 // LEAVE BELOW COMMENTED OUT, We may use it for later
 

@@ -1,3 +1,8 @@
+// nothing in here is being used anymore
+
+//________________________________________________________________ Unused functions __________________________________________________________________________________________
+
+
 // global variables
 paths = ['images\\Core\\CPU\\CPU', 'images\\Core\\MotherBoard\\Motherboard','images\\Accessories\\HardDrives\\HardDrive','images\\Accessories\\USB\\USB','images\\Accessories\\Cables\\Cable', 'images\\Accessories\\Adapters\\Adapter'];
 
@@ -54,7 +59,6 @@ var homeDisplay = function(product) {
 }
 
 
-//________________________________________________________________ Unused functions __________________________________________________________________________________________
 
 // test function
 function testFun(string){
