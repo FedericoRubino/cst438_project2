@@ -287,12 +287,8 @@ var getCartItems = function(callback, currentUserId, res){
 	statement = "SELECT * FROM order_table NATURAL JOIN product_table WHERE user_id =" + currentUserId;
 	connection.query(statement,function(error,results){
 		if(error){ throw error;}
-		if(results.length > 0){
-			callback(res, results);
-		} else {
-			return null;
-		}
-
+		console.log(results);
+		callback(res, results);
 	}); 
 }
 
@@ -303,14 +299,43 @@ var renderShoppingCart = function(res, products){
 
 }
 
-
 // shopping cart
 app.get("/shopping-cart", function(req, res){
-	var currentUserId = req.session.user.user_id;
-	getCartItems(renderShoppingCart,currentUserId,res);
+	if(req.session.user === undefined){
+		res.render("login");
+	} else {
+		var currentUserId = req.session.user.user_id;
+		getCartItems(renderShoppingCart,currentUserId,res);
+	}
+	// res.render("shopping-cart");
+});
+
+
+var removeFromCart = function(callback,orderID,res){
+	rem_stmt = "DELETE FROM order_table WHERE order_id =" + orderID;
+	console.log(rem_stmt);
+
+	connection.query(rem_stmt,function(error,results){
+		if(error){throw error;}
+		callback(res);
+	});
+}
+
+var renderShoppingCart_Del = function(res){
+	res.redirect("/shopping-cart");
+}
+
+// shopping cart
+app.get("/remove-item", function(req, res){
+	// var currentUserId = req.session.user.user_id;
+	var orderID_ = req.query.orderID;
+	removeFromCart(renderShoppingCart_Del,orderID_,res)
+	// getCartItems(renderShoppingCart,currentUserId,res);
 
 	// res.render("shopping-cart");
 });
+
+
 
 // user profile
 app.get("/user-profile", function(req, res){

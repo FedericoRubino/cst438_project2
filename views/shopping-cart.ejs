@@ -12,7 +12,9 @@
                 <div>No items in your cart!</div>
             <%} else { %>
                 <%for(var i = 0; i < products.length; i++) { %>
-                    <%=sumPrice += products[i].price%>
+                    
+                    <%sumPrice += products[i].price%>
+                    
                     <!-- repeat as needed based on products -->
                     <div class="jumbotron" style="padding: 10px; margin: 15px; width:81%">
                     	 <div class="row">
@@ -27,7 +29,7 @@
                     	 	</div> 
           					<div class="col-sm-4">
           				 		<p style ="float: left; margin-top: 40px"> Price: <%=products[i].price%>$ </p>
-                    	 		<button style="margin-right:40px; margin-top: 40px" type="remove" class="btn btn-danger float-right">Remove Item</button>
+                    	 		<a style="margin-right:40px; margin-top: 40px" type="remove" class="btn btn-danger float-right" href='remove-item?orderID=<%=products[i].order_id%>'>Remove Item</a>
                     	 	</div>	
         				</div>
                         
