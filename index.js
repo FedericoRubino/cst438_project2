@@ -33,6 +33,11 @@ module.exports = connection;
 
 // _________________________________________________________________________________________________________________________________
 
+function onSubmit(token) {
+     document.getElementById("register").submit();
+   }
+
+
 // register user path
 app.post('/register-account', function(req, res){
 	let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
