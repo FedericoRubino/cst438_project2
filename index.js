@@ -17,6 +17,12 @@ app.use(session({
 	saveUninitialized: true
 }));
 
+// This will make a user variable available in all your templates.
+app.use(function(req, res, next) {
+	res.locals.user = req.session.user;
+	next();
+  });
+
 // ___________________________CLEARDB_______________________________________________________________________________________________
 
 // mysql://b17b3063986ea6:e550d2df@us-cdbr-east-02.cleardb.com/heroku_135761bbf9978a7?reconnect=true
@@ -75,6 +81,13 @@ function checkUser(username){
 // 		// Use bcrypt to compare password?
 // 	})
 // }
+
+app.get('/logout', function(req, res) {
+	// clear session
+	console.log('In logout route.');
+	req.session.destroy();
+	res.redirect('/');
+});
 
 // grabs the username/password from login and checks to see if the user is valid
 app.post('/login', async function(req, res){
@@ -203,6 +216,7 @@ app.get("/create-account", function(req, res){
 app.post('/login', function(req, res){
 	res.send("Successful to POST @ login '/login'!\n");
  });
+ 
 
 // get product by id w/ callback
 var getProductById = function(callback,res, product_id) {

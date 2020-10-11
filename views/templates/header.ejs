@@ -26,6 +26,8 @@
       var element = document.getElementById('submit');
       element.onclick = validate;
     }
+
+    function 
     </script>
     <script src="https://www.google.com/recaptcha/api.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -91,9 +93,13 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAccount">
                             <div class="row">
                                 <div class="col text-center">
-                            <a class="dropdown-item, btn btn-outline-primary my-2 my-sm-0" href="/login">Login</a>   
-                            <a class="dropdown-item" style="text-decoration: underline; text-align: center;font-size: 0.75rem; color: #28a745" href="/create-account">Register</a>
-                                </div>
+                                    <% if (locals.user === undefined) { %>
+                                        <a class="dropdown-item, btn btn-outline-primary my-2 my-sm-0" href="/login">Login</a>   
+                                        <a class="dropdown-item" style="text-decoration: underline; text-align: center;font-size: 0.75rem; color: #28a745" href="/create-account">Register</a>
+                                    <% }else { %>
+                                        <a class="dropdown-item, btn btn-outline-primary my-2 my-sm-0" href="/logout">Logout</a>   
+                                    <%}%>
+                                 </div>
                             </div>
                         </div>
                          <div class="dropdown-left" style="padding-left: 10px">
