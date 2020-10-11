@@ -33,6 +33,11 @@ module.exports = connection;
 
 // _________________________________________________________________________________________________________________________________
 
+function onSubmit(token) {
+     document.getElementById("register").submit();
+   }
+
+
 // register user path
 app.post('/register-account', function(req, res){
 	let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
@@ -182,6 +187,11 @@ app.get("/clear-account", function(req, res){
 // Login
 app.get("/login", function(req, res){
 	res.render("login");
+});
+
+// User Profile
+app.get("/user_profile", function(req, res){
+	res.render("user_profile");
 });
 
 // Create Account
@@ -337,13 +347,6 @@ app.get("/remove-item", function(req, res){
 	// getCartItems(renderShoppingCart,currentUserId,res);
 
 	// res.render("shopping-cart");
-});
-
-
-
-// user profile
-app.get("/user-profile", function(req, res){
-	res.render("user-profile");
 });
 
 /* error page (route not found) */
