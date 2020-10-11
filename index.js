@@ -54,7 +54,7 @@ app.post('/register-account', function(req, res){
 		else{ 
 			console.log(result); 
 			console.log(data);;
-			res.redirect('/');
+			res.redirect('/login');
 		}
 	}); 
 });
