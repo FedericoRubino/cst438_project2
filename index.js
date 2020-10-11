@@ -184,6 +184,11 @@ app.get("/login", function(req, res){
 	res.render("login");
 });
 
+// User Profile
+app.get("/user_profile", function(req, res){
+	res.render("user_profile");
+});
+
 // Create Account
 app.get("/create-account", function(req, res){
 	res.render("create-account");
@@ -337,13 +342,6 @@ app.get("/remove-item", function(req, res){
 	// getCartItems(renderShoppingCart,currentUserId,res);
 
 	// res.render("shopping-cart");
-});
-
-
-
-// user profile
-app.get("/user-profile", function(req, res){
-	res.render("user-profile");
 });
 
 /* error page (route not found) */

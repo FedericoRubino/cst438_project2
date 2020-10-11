@@ -1,8 +1,8 @@
  <%- include('templates/header'); -%>				
  		
  		<main>
-          
-      <div class="jumbotron col-lg-6 col-md-6 col-sm-6 col-xs-6 offset-3 float-md-center" style="background-color: #ffff; border-style: solid; border-color: #e9ecef; width:50%; margin-bottom: 5px; margin-top: 50px;">
+      <div id="content" style="margin: 40px;">    
+      <div class="jumbotron col-lg-6 col-md-6 col-sm-6 col-xs-6 offset-3 float-md-center" style="background-color: #ffff; border-style: solid; border-color: #e9ecef; width:50%; margin-bottom: 50px; margin-top: 50px;">
 
   			<form method="POST" class="was-validated" action="/register-account">
           <div class="text-center"><h1>Welcome<br></h1><h4>Create your new account</h4></div>
@@ -18,7 +18,7 @@
           		<input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
           		<div class="valid-feedback">Valid.</div>
           		<div class="invalid-feedback">Please fill out this field.</div>
-          		<div><p>Make sure it's at least 6 characters, 
+          		<div><p style="font-size: 0.8rem">Make sure it's at least 6 characters, 
           		has a number, and has one special character.</p></div>
             </div>
           	<h5>Verify your Account</h5>
@@ -32,7 +32,7 @@
             </div>
   			</form>
 			</div>
-        
+      </div>  
         </main>
 
 <%- include('templates/footer'); -%>

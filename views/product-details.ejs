@@ -1,19 +1,24 @@
 <%- include('templates/header'); -%>
         <main>
-            <div id="content">
+            <div id="content" style="margin: 40px;">
 	            <h1> Product Details </h1>
 	            <div class="row">
 	            	<div id="image">
-	            		<div id="title"><%=product[0].product_name%></div>
-	            		<img id="largeImage" src="<%=product[0].img_path%>" ></div>
-		            	<div>
-			            	<div>Desciption: <%=product[0].product_name%></div>
-			            	<div>Quantitiy: <%=product[0].inventory%></div>
-			            	<div>Price: <%=product[0].price%></div>
-			            	<a href='add-to-cart?productID=<%=product[0].product_id%>' class='btn btn-primary'>Add To Cart</a> 
-		            	</div>
+	            		<img id="largeImage" src="<%=product[0].img_path%>" >
 	            	</div>
-				</div>
+		            <div style="margin-top:15px;">
+		            	<h4><%=product[0].product_name%></h4>
+			            <p>Desciption: <%=product[0].product_name%></p>
+		            </div>
+	            </div>
+	            <div class="row" style="margin-left: 5px; margin-bottom:9px;">
+	            		<div>Price: $<%=product[0].price%></div>
+	            </div>
+	            <div class="row" style="margin-left: 5px;  margin-top:15px;">
+	            		<label for="quantity" style="margin-right: 5px;margin-top: 5px;">Qty:</label>
+						<input style="margin-right: 16px;" type="number" id="quantity" name="quantity" min="0" max="<%=product[0].inventory%>">
+	            		<a href='add-to-cart?productID=<%=product[0].product_id%>' class='btn btn-primary'>Add To Cart</a> 
+	            </div>
             </div>
         </main>
 
