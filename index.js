@@ -17,17 +17,13 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-// This will make a user variable available in all your templates.
-app.use(function(req, res, next) {
-	res.locals.user = req.session.user;
-	next();
-  });
 
 // ___________________________CLEARDB_______________________________________________________________________________________________
 
 // mysql://b17b3063986ea6:e550d2df@us-cdbr-east-02.cleardb.com/heroku_135761bbf9978a7?reconnect=true
 // To connect to database via mysql command line
 // mysql --host=us-cdbr-east-02.cleardb.com --user=b17b3063986ea6 --password=e550d2df --reconnect heroku_135761bbf9978a7
+
 
 var connection = mysql.createPool({
   host: "us-cdbr-east-02.cleardb.com",
@@ -38,6 +34,46 @@ var connection = mysql.createPool({
 module.exports = connection;
 
 // _________________________________________________________________________________________________________________________________
+
+
+var prepData = function(callback, next, res, req){
+	let statement = "SELECT * FROM order_table NATURAL JOIN product_table WHERE user_id =" + req.session.user.user_id;
+	var products = null;
+	connection.query(statement, function(err,results){
+		if(err){throw err;}
+		if(results.length > 0){
+			products = results;
+			callback(products, next, res, req)
+		} else {
+			next();
+		}
+	});
+}
+
+var populateProductDetails = function(products, next, res, req){
+	var total = 0;
+	res.locals.quantity = products.length;
+	for(var i = 0; i < products.length; i++){
+		total += products[i].price;
+	}
+	res.locals.total = total;
+	next();
+}
+
+// This is gold!!
+// This will make a user variable available in all your templates.
+app.use(function(req, res, next) {
+	res.locals.user = req.session.user;
+	if(req.session.user === undefined){
+		next();
+
+	} else {
+		prepData(populateProductDetails, next, res, req);
+	}
+  });
+
+
+
 
 function onSubmit(token) {
      document.getElementById("register").submit();
@@ -204,7 +240,10 @@ app.get("/login", function(req, res){
 
 // User Profile
 app.get("/user_profile", function(req, res){
-	res.render("user_profile");
+	var tempPassword = req.session.user.password.substring(0,3);
+	// tempPassword += "*".repeat(req.session.user.password - 3);
+	tempPassword = tempPassword.concat(Array(req.session.user.password.length - 3).join("*"));
+	res.render("user_profile", {password:tempPassword});
 });
 
 // Create Account
