@@ -23,7 +23,7 @@ var createCard = function(source, content, title, path){
                     "<div class='card' style='width: 18rem; margin-top:10px;'> " +
                         "<img class='card-img-top' src="+ source +" alt='Card image cap: "+ title +"'> " +
                             "<div class='card-body'> " +
-                                "<h5 class='card-title'>"+ title +"</h5> " +
+                                "<h6 class='card-title'>"+ title +"</h6> " +
                                 "<p class='card-text'>"+ content +".</p> " +
                                 "<a href='product-details?productID="+ path +'.jpg'+"' class='btn btn-primary'>Product Details</a> " +
                             "</div> " +
