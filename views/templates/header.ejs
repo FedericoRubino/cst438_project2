@@ -88,7 +88,12 @@
                     <div class="dropdown" style="padding-left: 10px">
                         <ul class="navbar-nav mr-auto">
                         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="fas fa-user-alt"></span> Account 
+                        <span class="fas fa-user-alt"></span>
+                        <% if (locals.user === undefined) { %>
+                            Account 
+                        <%} else { %>
+                            <%=locals.user.username%>
+                        <%}%>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAccount">
                             <div class="row">
@@ -98,6 +103,7 @@
                                         <a class="dropdown-item" style="text-decoration: underline; text-align: center;font-size: 0.75rem; color: #28a745" href="/create-account">Register</a>
                                     <% }else { %>
                                         <a class="dropdown-item, btn btn-outline-primary my-2 my-sm-0" href="/logout">Logout</a>   
+                                        <a class="dropdown-item" style="text-decoration: underline; text-align: center;font-size: 0.75rem; color: #28a745" href="/user_profile">My Account</a>
                                     <%}%>
                                  </div>
                             </div>
@@ -109,10 +115,14 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <div class="row">
-                                <p class="dropdown-item" id="items" >Items: 0</p>
-                                <p class="dropdown-item" id="money" >Total: $0.00</p>
+                                <% if (locals.user === undefined) { %>
+                                    <p class="dropdown-item" id="items" >Not Logged In%></p>
+                                <%} else {%>
+                                    <p class="dropdown-item" id="items" >Items: <%=locals.quantity%></p>
+                                    <p class="dropdown-item" id="money" >Total: $<%=locals.total%></p>
+                                <%} %>
                                 <div class="col text-center">
-                            <a class="dropdown-item, btn btn-outline-primary my-2 my-sm-0" href="/shopping-cart">Checkout</a>   
+                                    <a class="dropdown-item, btn btn-outline-primary my-2 my-sm-0" href="/shopping-cart">Checkout</a>   
                                 </div>
                             </div>
                         </div>
