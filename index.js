@@ -263,15 +263,15 @@ var getProductById = function(callback,res, product_id) {
 	connection.query(statement, function(error, results){
 		if(error) throw error;
 		if(results.length > 0){
-			callback(results,res);
+			callback(results,res,product_id);
 		} 
 	});
 }
 
 // callback function for the product page
 // using callback functions to over come the asynch issue
-var renderProductPage = function(products,res){
-	res.render("product-details", {product:products});
+var renderProductPage = function(products,res,product_id){
+	res.render("product-details", {product:products,product_id:product_id});
 } 
 
 // product details
