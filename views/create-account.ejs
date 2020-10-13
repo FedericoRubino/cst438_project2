@@ -18,10 +18,11 @@
           		<input type="password" class="form-control" id="password" placeholder="Enter password" name="password" pattern="(?=.*\d)(?=.*[$&+,:;=?@#*()%!-]).{6,}" title="Must contain at least at least 6 or more characters, one number, and one special character" required>
               <div class="valid-feedback">Valid.</div>
               <div class="invalid-feedback">Please fill out this field.</div>
-               <div><p>Password must contain at least at least 6 or more characters, one number, and one special character</p>
-          	   <button style="margin-top: 15px" class="g-recaptcha" data-sitekey="6LddANYZAAAAAI1q1HVnwaJlaqoEf0QOEOsZKi9X" 
+               <div><p style="font-size: 0.79rem" >Password must contain at least at least 6 or more characters, one number, and one special character</p>
+               <div class="text-center">
+          	   <button style="margin-top: 15px" class="g-recaptcha btn btn-success" data-sitekey="6LddANYZAAAAAI1q1HVnwaJlaqoEf0QOEOsZKi9X" 
                data-callback='onSubmit'>Create Acount</button>
-            
+               </div>
   			</form>
         <div id="message">
                 <h3>Password must contain the following:</h3>
@@ -31,7 +32,7 @@
          </div>
 			</div>
       </div> 
-     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+     <script src="https://www.google.com/recaptcha/api.js" style="display:block !important;"async defer></script>
      <script>
        function onSubmit(token) {
          document.getElementById("register").submit();
