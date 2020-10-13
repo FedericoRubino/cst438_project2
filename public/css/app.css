@@ -87,4 +87,46 @@ body, p, a, h1, h2, h3, h4 , h5, h6 {
     z-index: 999;
 }
 
+@media only screen and (max-width: 600px) {
+    #dropdownMenuButtonCart {
+    margin-top: 5px;
+    margin-left: -10px;
+    }
+    #search_field {
+        width: 70%;
+    }
+    #headerSearch {
+        margin-left: 15px;
+        border: 1.8px solid #28a745;
+    }
+
+    .navbar-light .navbar-toggler{
+        margin-bottom:  5px;
+        margin-top: 5px;
+        border: 1.75px solid transparent;
+        border-color: rgba(0,0,0,.1);
+    }
+    .dropdown-item {
+        font-size: 1rem !important;
+    }
+    #content {
+        margin: 10px !important;
+    }
+    #logo {
+        width: 150px !important;
+        height: 100px !important ;
+    }
+    .jumbotron {
+        width: 85% !important;
+    }
+
+    .offset-3 {
+        margin-left: 7% !important;
+    }
+    .invalid-feedback {
+        margin-top: 2px;
+    }
+
+}
+
 

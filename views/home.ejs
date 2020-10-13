@@ -1,12 +1,13 @@
 <%- include('templates/header'); -%>
         <main>
 			<div id="content">
-                <h2 style="margin: 40px;">All Our Products</h2>
-                <div class="row"  id="images">
+        <div style="margin: 40px;">
+                <h2>All Our Products</h2>
+                <div class="row"  id="images" style="margin-bottom: 10px;">
 
 	                <%if (products.length > 0){ %>
 	                	<%for(var i = 0; i < products.length; i++) { %>
-							<div class='col-sm'> 
+							         <div class='col-sm'> 
 			                    <div class='card' style='width: 18rem;'> 
 			                        <img class='card-img-top' src="<%=products[i].img_path%>" alt='Card image cap: "<%=products[i].product_name%>"'> 
 			                            <div class='card-body'> 
@@ -14,13 +15,15 @@
 			                                <p class='card-text'><%=products[i].details%></p> 
 			                                <a href='product-details?productID=<%=products[i].product_id%>' class='btn btn-primary'>Product Details</a> 
 			                            </div> 
-			                    </div> 
-			                </div>
+			                     </div> 
+			                 </div>
 	                	<%}%>
-	            	<%} else {%>
+	            	  <%} else {%>
 
-		            <% } %>
-		        </div>
+		              <% } %>
+
+		            </div>
+        </div>
 		        <div style="background-color: #f8f9fa">
                 <h2 style="margin-top: 40px; margin-left:40px; margin-right: 40px; margin-bottom: 15px;"></br>About Us</h2>
                 	<h5 style="margin-top: 15px; margin-left:40px; margin-right: 40px; margin-bottom: 50px;">In Fall of 2020 a group of self-proclaimed "computer geeks" met at CSU Monterey Bay. They found they all had a common problem. Where could they buy inexpensive, yet reliable computer parts? This was the beginning of bits & bots a computer parts web-store that provides customers with the best priced products without having to worry about their reliability.</br></br></h5>
@@ -36,8 +39,8 @@
                 		</div>
                 	</div>
   						<div class="col-sm-3">
+              <div class="text-center">
   						<img src="images/OurTeam/Asset 2.png" id="team" style="margin-left: 26px;">
-  						<div class="text-center">
   						<h5>Anna Stubler</h5>
   						<p>Senior UX Designer,</br>Front-end Programmer</p>
   						</div>
@@ -46,7 +49,7 @@
   					    <div class="text-center">
   						<img src="images/OurTeam/Asset 3.png" id="team" style="margin-left: 26px;">
   						<h5>Jonathan Welham</h5>
-  						<p>Database Specialist, Senior Programmer</p>
+  						<p>Database Specialist,</br> Senior Programmer</p>
   						</div>
   					</div>
   					<div class="col-sm-3">
