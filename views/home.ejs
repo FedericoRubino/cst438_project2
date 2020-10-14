@@ -6,7 +6,10 @@
                 <div class="row"  id="images" style="margin-bottom: 10px;">
 
 	                <%if (products.length > 0){ %>
+                    <div class="row" style="margin: 10px;">
+
 	                	<%for(var i = 0; i < products.length; i++) { %>
+                    
 							         <div class='col-sm'> 
 			                    <div class='card' style='width: 18rem;'> 
 			                        <img class='card-img-top' src="<%=products[i].img_path%>" alt='Card image cap: "<%=products[i].product_name%>"'> 
@@ -17,7 +20,16 @@
 			                            </div> 
 			                     </div> 
 			                 </div>
+                      
+                      <%if (i+1 % 3 == 0){ %>
+                        </div>
+                        <div class="row" style="margin: 10px;">
+
+                      <%}%>
+
+
 	                	<%}%>
+                    </div>
 	            	  <%} else {%>
 
 		              <% } %>

@@ -287,15 +287,15 @@ var getSpecificProducts = function(callback,res, product_n) {
 	connection.query(statement, function(error, results){
 		if(error) throw error;
 		if(results.length > 0){
-			callback(results,res);
+			callback(results,res,product_n);
 		} 
 	});
 }
 
 // callback function for the product page
 // using callback functions to over come the asynch issue
-var renderProductDetails = function(products,res){
-	res.render("product-page", {products:products});
+var renderProductDetails = function(products,res, product_n){
+	res.render("product-page", {products:products, product_n:product_n});
 } 
 
 // product page
@@ -312,7 +312,7 @@ var searchProducts = function(callback,res, search_val) {
 	connection.query(statement, function(error, results){
 		if(error) throw error;
 		if(results.length > 0){
-			callback(results,res);
+			callback(results,res,search_val);
 		} else {
 			res.redirect("/");
 		} 
@@ -321,9 +321,9 @@ var searchProducts = function(callback,res, search_val) {
 
 // callback function for the product page
 // using callback functions to over come the asynch issue
-var renderProductDetailsSearch = function(products,res){
+var renderProductDetailsSearch = function(products,res, search_val){
 	// console.log	(products);
-	res.render("product-page", {products:products});
+	res.render("product-page", {products:products, product_n:"Search: " + search_val});
 } 
 // ________________________________________________________________________________________________________________________________
 
