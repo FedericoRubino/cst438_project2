@@ -1,14 +1,14 @@
 <%- include('templates/header'); -%>
         <main>
             <div id="content" style="margin: 40px;">
-	            <h1> Product Details </h1>
+	            <h1> <%=product[0].product_name%> </h1>
 	            <div class="row">
 	            	<div id="image">
 	            		<img id="largeImage" src="<%=product[0].img_path%>" >
 	            	</div>
 		            <div style="margin-top:15px;">
 		            	<h4><%=product[0].product_name%></h4>
-			            <p>Desciption: <%=product[0].product_name%></p>
+			            <p>Desciption: <%=product[0].details%></p>
 		            </div>
 	            </div>
 	            <div class="row" style="margin-left: 5px; margin-bottom:9px;">
