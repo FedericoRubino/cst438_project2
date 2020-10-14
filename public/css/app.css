@@ -13,8 +13,19 @@ img {
     width: 115px;
 }
 
+#team {
+    box-shadow: none;
+    border: none;
+    height: 200px;
+    width: 200px;
+}
+
 img:hover {
     box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.card-body {
+  margin-bottom: 20px;
 }
 
 .card{
@@ -24,10 +35,102 @@ img:hover {
 #largeImage {
     margin-right:40px;
     margin-left:10px;
+    margin-bottom:10px;
+    margin-top: 10px;
     width: 350px;
     height: 350px;
+    box-shadow: none;
+    border: none;
 }
 
 body, p, a, h1, h2, h3, h4 , h5, h6 {
     font-family: 'Raleway', sans-serif;
 }
+
+/* The message box is shown when the user clicks on the password field */
+#message {
+  display:none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+#message p {
+  padding: 10px 35px;
+  font-size: 18px;
+}
+
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "&#10004;";
+}
+
+/* Add a red text color and an "x" icon when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "&#10006;";
+}
+
+.content { position: relative; min-height: 100vh; padding-bottom: 60px; }
+
+.grecaptcha-badge {
+    z-index: 999;
+}
+
+@media only screen and (max-width: 600px) {
+    #dropdownMenuButtonCart {
+    margin-top: 5px;
+    margin-left: -10px;
+    }
+    #search_field {
+        width: 70%;
+    }
+    #headerSearch {
+        margin-left: 15px;
+        border: 1.8px solid #28a745;
+    }
+
+    .navbar-light .navbar-toggler{
+        margin-bottom:  5px;
+        margin-top: 5px;
+        border: 1.75px solid transparent;
+        border-color: rgba(0,0,0,.1);
+    }
+    .dropdown-item {
+        font-size: 1rem !important;
+    }
+    #content {
+        margin: 10px !important;
+    }
+    #logo {
+        width: 150px !important;
+        height: 100px !important ;
+    }
+    .jumbotron {
+        width: 85% !important;
+    }
+
+    .offset-3 {
+        margin-left: 7% !important;
+    }
+    .invalid-feedback {
+        margin-top: 2px;
+    }
+
+}
+
+

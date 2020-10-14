@@ -8,7 +8,28 @@
     <title>bits & bots</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <script src="https://www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit"></script>
+    <script>
+    function onSubmit(token) {
+      alert('thanks ' + document.getElementById('field').value);
+    }
+
+    function validate(event) {
+      event.preventDefault();
+      if (!document.getElementById('field').value) {
+        alert("You must add text to the required field");
+      } else {
+        grecaptcha.execute();
+      }
+    }
+
+    function onload() {
+      var element = document.getElementById('submit');
+      element.onclick = validate;
+    }
+
+    function 
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="app.css">
     </head>
@@ -30,22 +51,22 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">CORE COMPONENTS</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="/product-page?productID=0">CPUS</a>
-                                <a class="dropdown-item" href="/product-page?productID=1">MOTHERBOARDS</a>
+                                <a class="dropdown-item" href="/product-page?productID=CPU">CPUS</a>
+                                <a class="dropdown-item" href="/product-page?productID=MOTHERBOARD">MOTHERBOARDS</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">STORAGE DEVICES</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="/product-page?productID=2">HARD DRIVES</a>
-                                <a class="dropdown-item" href="/product-page?productID=3">USB DRIVES</a>
+                                <a class="dropdown-item" href="/product-page?productID=HARDDRIVES">HARD DRIVES</a>
+                                <a class="dropdown-item" href="/product-page?productID=USB">USB DRIVES</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ACCESSORIES</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="/product-page?productID=4">CABLES</a>
-                                <a class="dropdown-item" href="/product-page?productID=5">ADAPTERS</a>
+                                <a class="dropdown-item" href="/product-page?productID=CABLE">CABLES</a>
+                                <a class="dropdown-item" href="/product-page?productID=ADAPTER">ADAPTERS</a>
                             </div>
                         </li>
                     </ul>
@@ -55,10 +76,10 @@
                         
                         <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
 
-                        <input id="search_field" type="text" name="search_field" placeholder="Search" aria-label="Search" class="form-control mr-sm-2">
+                        <input id="search_field" type="text" name="search_field" placeholder="Search by Name" aria-label="Search" class="form-control mr-sm-2">
                         
 
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        <button class="btn btn-outline-success my-2 my-sm-0" id="headerSearch" type="submit">Search </button>
                     
                     </form>
 
@@ -67,14 +88,24 @@
                     <div class="dropdown" style="padding-left: 10px">
                         <ul class="navbar-nav mr-auto">
                         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="fas fa-user-alt"></span> Account 
+                        <span class="fas fa-user-alt"></span>
+                        <% if (locals.user === undefined) { %>
+                            Account 
+                        <%} else { %>
+                            <%=locals.user.username%>
+                        <%}%>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAccount">
                             <div class="row">
                                 <div class="col text-center">
-                            <a class="dropdown-item, btn btn-outline-primary my-2 my-sm-0" href="/login">Login</a>   
-                            <a class="dropdown-item" style="text-decoration: underline; text-align: center;font-size: 0.75rem; color: #28a745" href="/create-account">Register</a>
-                                </div>
+                                    <% if (locals.user === undefined) { %>
+                                        <a class="dropdown-item, btn btn-outline-primary my-2 my-sm-0" href="/login">Login</a>   
+                                        <a class="dropdown-item" style="text-decoration: underline; text-align: center;font-size: 0.75rem; color: #28a745" href="/create-account">Register</a>
+                                    <% }else { %>
+                                        <a class="dropdown-item, btn btn-outline-primary my-2 my-sm-0" href="/logout">Logout</a>   
+                                        <a class="dropdown-item" style="text-decoration: underline; text-align: center;font-size: 0.75rem; color: #28a745" href="/user_profile">My Account</a>
+                                    <%}%>
+                                 </div>
                             </div>
                         </div>
                          <div class="dropdown-left" style="padding-left: 10px">
@@ -84,10 +115,14 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <div class="row">
-                                <p class="dropdown-item" id="items" >Items: 0</p>
-                                <p class="dropdown-item" id="money" >Total: $0.00</p>
+                                <% if (locals.user === undefined) { %>
+                                    <p class="dropdown-item" id="items" >Not Logged In%></p>
+                                <%} else {%>
+                                    <p class="dropdown-item" id="items" >Items: <%=locals.quantity%></p>
+                                    <p class="dropdown-item" id="money" >Total: $<%=locals.total%></p>
+                                <%} %>
                                 <div class="col text-center">
-                            <a class="dropdown-item, btn btn-outline-primary my-2 my-sm-0" href="/shopping-cart">Checkout</a>   
+                                    <a class="dropdown-item, btn btn-outline-primary my-2 my-sm-0" href="/shopping-cart">Checkout</a>   
                                 </div>
                             </div>
                         </div>
