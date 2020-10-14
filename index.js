@@ -238,6 +238,11 @@ app.get("/login", function(req, res){
 	res.render("login");
 });
 
+// Checkout Success
+app.get("/checkout-success", function(req, res){
+	res.render("checkout-success");
+});
+
 // User Profile
 app.get("/user_profile", function(req, res){
 	var tempPassword = req.session.user.password.substring(0,3);
