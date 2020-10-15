@@ -47,6 +47,22 @@ body, p, a, h1, h2, h3, h4 , h5, h6 {
     font-family: 'Raleway', sans-serif;
 }
 
+html {
+  position: relative !important;
+  min-height: 100% !important;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 40px !important;
+}
+.footer {
+  position: absolute !important; 
+  bottom: 0 !important;
+  width: 100% !important;
+  /* Set the fixed height of the footer here */
+  height: 40px !important;
+}
+
 /* The message box is shown when the user clicks on the password field */
 #message {
   display:none;
@@ -91,7 +107,26 @@ body, p, a, h1, h2, h3, h4 , h5, h6 {
     z-index: 999;
 }
 
+.btn-primary{
+  background-color: #2a77a9 !important;
+  border-color: #2a77a9 !important;
+}
+
+.btn-outline-primary{
+  color: #2a77a9 !important;
+  border-color: #2a77a9 !important;
+}
+
+.btn-outline-primary:hover {
+  color: #ffff !important;
+  background-color: #2a77a9 !important;
+}
+
 @media only screen and (max-width: 600px) {
+    #checkout{
+      margin-left: auto;
+      margin-right:auto;
+    }
     #dropdownMenuButtonCart {
     margin-top: 5px;
     margin-left: -10px;
@@ -115,6 +150,15 @@ body, p, a, h1, h2, h3, h4 , h5, h6 {
     }
     #content {
         margin: 10px !important;
+    }
+    #contentUser {
+        margin: 40px !important;
+    }
+    #contentProduct{
+        margin: 40px !important;
+    }
+    #userProfile {
+      margin-top: 20px;
     }
     #logo {
         width: 150px !important;
