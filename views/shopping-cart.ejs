@@ -24,7 +24,7 @@
                     	 		<div>
                     	 			<img style ="float: left; width=400px; height=400px" src="<%=products[i].img_path%>">
                     	 			<div class="content-heading"><h3><%=products[i].product_name%></h3></div>
-                    	 			<p>Details: <%=products[i].details%></p>  
+                    	 			<p>Details: <%=products[i].details.substring(0,100)%>...</p>  
                     	 		</div>	
                     	 	</div> 
           					<div class="col-sm-4">
