@@ -6,12 +6,12 @@
                 <div class="row"  id="images" style="margin-bottom: 10px;">
 
 	                <%if (products.length > 0){ %>
-                    <div class="row" style="margin: 10px;">
+                    <div class="row equal" style="margin: 10px;">
 
 	                	<%for(var i = 0; i < products.length; i++) { %>
                     
 							         <div class='col-sm'> 
-			                    <div class='card' style='width: 18rem;'> 
+			                    <div class='card' style='width: 18rem; margin: 10px;'> 
 			                        <img class='card-img-top' src="<%=products[i].img_path%>" alt='Card image cap: "<%=products[i].product_name%>"'> 
 			                            <div class='card-body'> 
 			                                <h5 class='card-title'><%=products[i].product_name%></h5> 
