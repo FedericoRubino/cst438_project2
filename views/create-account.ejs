@@ -2,9 +2,9 @@
  		
  		<main>
       <div id="content" style="margin: 40px;">    
-      <div class="jumbotron col-lg-6 col-md-6 col-sm-6 col-xs-6 offset-3 float-md-center" style="background-color: #ffff; border-style: solid; border-color: #e9ecef; width:50%; margin-bottom: 50px; margin-top: 50px;">
+        <div class="jumbotron col-lg-6 col-md-6 col-sm-6 col-xs-6 offset-3 float-md-center" style="background-color: #ffff; border-style: solid; border-color: #e9ecef; width:50%; margin-bottom: 50px; margin-top: 50px;">
 
-  			<form id="register" method="POST" class="was-validated" action="/register-account">
+  			 <form id="register" method="POST" class="was-validated" action="/register-account">
           <div class="text-center"><h1>Welcome<br></h1><h4>Create your new account</h4></div>
           <div class="form-group" stlye="margin-top:20px;">
           	<label for="username">Username:</label>
@@ -23,15 +23,12 @@
           	   <button style="margin-top: 15px" class="g-recaptcha btn btn-success" data-sitekey="6LddANYZAAAAAI1q1HVnwaJlaqoEf0QOEOsZKi9X" 
                data-callback='onSubmit'>Create Acount</button>
                </div>
-  			</form>
-        <div id="message">
-                <h3>Password must contain the following:</h3>
-                  <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-                  <p id="number" class="invalid">A <b>number</b></p>
-                  <p id="special" class="invalid">A <b>special</b> character</p>
-         </div>
-			</div>
-      </div> 
+          </div>
+  			 </form>
+        
+			 </div>
+      </div>
+      </br></br> 
      <script src="https://www.google.com/recaptcha/api.js" style="display:block !important;"async defer></script>
      <script>
        function onSubmit(token) {
@@ -44,16 +41,6 @@
       var number = document.getElementById("number");
       var letter = document.getElementById("special");
       
-
-      // When the user clicks on the password field, show the message box
-      myInput.onfocus = function() {
-        document.getElementById("message").style.display = "block";
-      }
-
-      // When the user clicks outside of the password field, hide the message box
-      myInput.onblur = function() {
-        document.getElementById("message").style.display = "none";
-      }
 
         // Validate length
         if(myInput.value.length >= 8) {
