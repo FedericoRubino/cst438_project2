@@ -1,21 +1,20 @@
 <%- include('templates/header'); -%>
         <main>
             <div id="contentProduct" style="margin: 40px;">
-	            <h1> <%=product[0].product_name%> </h1>
 	            <div class="row">
 	            	<div id="image">
 	            		<img id="largeImage" src="<%=product[0].img_path%>" >
 	            	</div>
-		            <div style="margin-top:15px;">
+		            <div style="margin-top:15px; margin-left: 10px;">
 		            	<h4><%=product[0].product_name%></h4>
-			            <p>Desciption: <%=product[0].details%></p>
+			            <p><%=product[0].details%></p>
 		            </div>
 	            </div>
-	            <div class="row" style="margin-bottom:9px;">
-	            		<div>Price: $<%=product[0].price%></div>
+	            <div class="row">
+	            		<div style="margin-bottom:19px; margin-left: 10px;">Price: $<%=product[0].price%></div>
 	            </div>
-	            <div class="row" margin-top:15px;">
-	            		<label for="quantity" style="margin-right: 5px;margin-top: 5px;">Qty:</label>
+	            <div class="row">
+	            		<label for="quantity"  style="margin-left: 10px; margin-right:4px; margin-top: 4px">Qty:</label>
 						<input style="margin-right: 16px;" type="number" id="quantity" name="quantity" min="0" max="<%=product[0].inventory%>">
 	            		<a href='add-to-cart?productID=<%=product[0].product_id%>' class='btn btn-primary'>Add To Cart</a> 
 	            </div>
