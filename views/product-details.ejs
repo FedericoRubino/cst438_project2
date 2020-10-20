@@ -14,10 +14,15 @@
 	            		<div style="margin-bottom:19px; margin-left: 10px;">Price: $<%=product[0].price%></div>
 	            </div>
 	            <div class="row">
-	            		<label for="quantity"  style="margin-left: 10px; margin-right:4px; margin-top: 4px">Qty:</label>
-						<input style="margin-right: 16px;" type="number" id="quantity" name="quantity" min="0" max="<%=product[0].inventory%>">
-	            		<a href='add-to-cart?productID=<%=product[0].product_id%>' class='btn btn-primary'>Add To Cart</a> 
+	            		<div style="margin-bottom:19px; margin-left: 10px;">Current Inventory: <%=product[0].inventory%></div>
 	            </div>
+	            <form action='/add-to-cart?productID=<%=product[0].product_id%>' method="POST">
+		            <div class="row">
+		            		<label for="quantity"  style="margin-left: 10px; margin-right:4px; margin-top: 4px">Qty:</label>
+							<input style="margin-right: 16px;" type="number" id="quantity" name="quantity" min="1" max="<%=product[0].inventory%>" value="1" required>
+		            		<button type="submit" class='btn btn-primary'>Add To Cart</button> 
+		            </div>
+	            </form>
 	            <p></br></br></p>
             </div>
         </main>

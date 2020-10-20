@@ -238,14 +238,80 @@ app.get("/login", function(req, res){
 	res.render("login");
 });
 
-// Checkout Success
-app.get("/checkout-success", function(req, res){
+//goes 3rd
+var deleteTable = function(res,req){
+
 	statement = "DELETE FROM order_table WHERE user_id = " + req.session.user.user_id + ";";
 	connection.query(statement,function(err,result){
 		if(err){throw err;}
 	});
 
 	res.render("checkout-success");
+
+}
+
+//goes 2nd
+var getTheCart = function(callback,inventories,req,res){
+	
+	var mapSize = inventories.size;
+	inventories.forEach(function(key,val){
+		mapSize = mapSize - 1;
+		var statement = "SELECT * FROM product_table WHERE product_id =" + key;
+		var currentInventory = 0; 
+		connection.query(statement, function(err,result){
+			if(err){throw err;}
+			if(result > 0){
+				currentInventory = result[0].inventory;
+			}
+		});
+
+		var newInventory = currentInventory - val;
+		console.log("mapsize", mapSize)
+
+		console.log("key:", key, currentInventory);
+		console.log(newInventory);
+		stmt = "UPDATE product_table SET inventory = " + newInventory +" WHERE product_id=" + key;
+		connection.query(stmt, function(err,result){
+			if(err){throw err;}
+		});
+		if(mapSize <= 0){
+			callback(res,req);
+		}
+	}); // end of for loop
+}
+
+// goes 1st
+var prepFunction = function(callback,foundItems,req,res){
+	for(var i=0; i<foundItems.length;i++){
+		if(foundItems[i].inventory <= 0){
+			//complain here!!
+		}
+	}
+
+	let inventories = new Map();
+	for(var i=0; i<foundItems.length;i++){
+		if(inventories.has(foundItems[i].product_id)){
+			inventories.set(foundItems[i].product_id, inventories.get(foundItems[i].product_id) + 1)
+		} else{
+			inventories.set(foundItems[i].product_id,1);
+		}
+		if(i == foundItems.length - 1){
+			callback(deleteTable,inventories,req,res)
+		}
+	}
+}
+
+// Checkout Success
+app.get("/checkout-success", function(req, res){
+	var allItemsStatement = "SELECT * FROM order_table NATURAL JOIN product_table WHERE user_id =" + req.session.user.user_id;
+	connection.query(allItemsStatement, function(err,result){
+		if(err){throw err;}
+		if(result.length > 0){
+			prepFunction(getTheCart,result,req,res);
+			// getTheCart(deleteTable,result,req,res);
+		}
+	});
+
 });
 
 // User Profile
@@ -345,16 +411,20 @@ app.get("/search-action", function(req, res) {
 });
 
 // after pressing the add to cart table
-app.get("/add-to-cart",function(req,res){
+app.post("/add-to-cart", async function(req,res){
 	if(req.session.user === undefined){
 		res.render("login");
 	} else {
+		var quantity = req.body.quantity;
+		console.log(quantity);
 		var product_id_ = req.query.productID;
 		var insert_stmt = "INSERT INTO order_table (user_id, product_id) VALUES (?,?)";
 		var data = [req.session.user.user_id, product_id_];
-		connection.query(insert_stmt, data, function(error, results){
-			if(error) throw error;
-		});
+		for(var i = 0;i<quantity;i++){
+			connection.query(insert_stmt, data, function(error, results){
+				if(error) throw error;
+			});
+		}
 		res.redirect("/shopping-cart");
 	}
 });
