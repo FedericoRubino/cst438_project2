@@ -309,53 +309,80 @@ app.get("/login", function(req, res){
 // 	Cart error
 
 
+var deleteOrder = function(res, user_id){
+	statement = "DELETE FROM order_table WHERE user_id = " + user_id;
+	connection.query(statement,function(error,results){
+		if(error){throw err;}
+		res.render("checkout-success");
+	});
+}
+
+var updateInventory = function(currentNum, res, currentID, user_id){
+	if(currentNum > 0){
+		var newNum = currentNum - 1;
+		stmt2 = "UPDATE product_table SET inventory = " + newNum + " WHERE product_id = " +  currentID;
+ 		connection.query(stmt2,function(err,result){
+			if(err){throw err;
+			} else {
+				console.log(result)
+			}
+	  	});
+	}	
+}
+
+
+var getInventoryByProductId = function(callback, res, currentID, user_id){
+	var stmt1 = "SELECT inventory FROM product_table WHERE product_id = " + currentID;
+	var currentNum;
+
+	connection.query(stmt1,function(err,result){
+		if(err){throw err;
+		} else {
+			currentNum = result[0].inventory;
+			console.log(currentNum);
+			// callback === updateInventory
+			callback(currentNum, res, currentID, user_id);
+		}	
+	});
+}
+
+var inventoryUpdate = function(orders, res, user_id){
+	var currentCart = orders;
+
+	console.log(currentCart.length);
+	
+	for(var i = 0; i < currentCart.length; i++){
+		console.log("here");
+		
+		var data = currentCart[i];
+
+		var currentID = data.product_id;
+		console.log(currentID);
+
+		getInventoryByProductId(updateInventory, res, currentID, user_id);
+ 	}
+
+ 	// After we are done looping through the order to update the inventory in the database
+ 	// We delete the users order(cart)
+ 	deleteOrder(res, user_id);
+}
+
+var getOrderTablebyUserId = function(callback, res, user_id){
+	var stmt = "SELECT * FROM order_table NATURAL JOIN product_table WHERE user_id = " + user_id;
+	connection.query(stmt, function(error, results){
+		if(error) throw error;
+		if(results.length > 0){
+			// callback === getInventoryByProductId
+			callback(results, res, user_id);
+		}
+	});
+}
+
+
 // Checkout Success
 app.get("/checkout-success", function(req, res){
-	var stmt = "SELECT product_id FROM order_table NATURAL JOIN product_table WHERE user_id =" + req.session.user.user_id;
-	var currentCart;
-	connection.query(stmt,function(err,result){
-	if(err){throw err;}
-	currentCart = result;
-	console.log(currentCart);
-	
-	
-	var currentNum = 0;
-	for(var i = 0; i < currentCart.length; i++){
-		var data = currentCart[i];
-		console.log(data.product_id);
-		var currentID = data.product_id;
-		//console.log(currentID);
-		var currentNum = 0;
-		var stmt1 = "SELECT inventory FROM product_table WHERE product_id =" + currentID;
-		connection.query(stmt1,function(err,result){
-			if(err){throw err;}
-			else {
- 				currentNum = result[0].inventory;
- 			}
-	  	
-		
-		console.log("Number: " + currentNum);
-		if(currentNum > 0){
-			console.log("Number: " + currentNum);
-			var newNum = currentNum - 1;
- 			stmt2 = "UPDATE product_table SET inventory = " + newNum + " WHERE product_id = " +  currentID;
- 			connection.query(stmt2,function(err,result){
-			if(err){throw err;}
-			else {
- 			//complain here!!
- 			}
-	  		});
- 		}
- 		});
- 		
-  	}
-  	
-  	});
-		statement = "DELETE FROM order_table WHERE user_id = " + req.session.user.user_id + ";";
-		connection.query(statement,function(err,result){
-		if(err){throw err;}
-		res.render("checkout-success");
-		});
+	var user_id = req.session.user.user_id;
+	getOrderTablebyUserId(inventoryUpdate, res, user_id);
 });
 
 // User Profile
