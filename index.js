@@ -311,38 +311,51 @@ app.get("/login", function(req, res){
 
 // Checkout Success
 app.get("/checkout-success", function(req, res){
-	var stmt1 = "SELECT * FROM order_table NATURAL JOIN product_table WHERE user_id = " + req.session.user.user_id;
-	connection.query(stmt1,function(err,result){
+	var stmt = "SELECT product_id FROM order_table NATURAL JOIN product_table WHERE user_id =" + req.session.user.user_id;
+	var currentCart;
+	connection.query(stmt,function(err,result){
 	if(err){throw err;}
-	var currentCart = result;
+	currentCart = result;
 	console.log(currentCart);
+	
+	
 	var currentNum = 0;
 	for(var i = 0; i < currentCart.length; i++){
-		stmt2 = "SELECT inventory FROM product_table WHERE product_id = " + currentCart[i].product_id;
-		connection.query(stmt2,function(err,result){
-		if(err){throw err;}
-		var currentNum = result;
-		console.log(currentCart[i].product_id);
-		console.log(currentNum);
-	})
+		var data = currentCart[i];
+		console.log(data.product_id);
+		var currentID = data.product_id;
+		//console.log(currentID);
+		var currentNum = 0;
+		var stmt1 = "SELECT inventory FROM product_table WHERE product_id =" + currentID;
+		connection.query(stmt1,function(err,result){
+			if(err){throw err;}
+			else {
+ 				currentNum = result[0].inventory;
+ 			}
+	  	
+		
 		console.log("Number: " + currentNum);
 		if(currentNum > 0){
 			console.log("Number: " + currentNum);
- 			stmt = "UPDATE product_table SET inventory = " + (currentNum - 1) +"WHERE product_id = " + currentCart[i].product_id;
- 			connection.query(stmt,function(err,result){
+			var newNum = currentNum - 1;
+ 			stmt2 = "UPDATE product_table SET inventory = " + newNum + " WHERE product_id = " +  currentID;
+ 			connection.query(stmt2,function(err,result){
 			if(err){throw err;}
-			});
- 		}
- 		else {
+			else {
  			//complain here!!
+ 			}
+	  		});
  		}
-	}
+ 		});
+ 		
+  	}
+  	
+  	});
 		statement = "DELETE FROM order_table WHERE user_id = " + req.session.user.user_id + ";";
 		connection.query(statement,function(err,result){
 		if(err){throw err;}
 		res.render("checkout-success");
 		});
-	});
 });
 
 // User Profile
