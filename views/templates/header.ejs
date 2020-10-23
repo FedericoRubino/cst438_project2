@@ -118,8 +118,15 @@
                                 <% if (locals.user === undefined) { %>
                                     <p class="dropdown-item" id="items" >Not Logged In%></p>
                                 <%} else {%>
+                                    <% if (locals.total === undefined) { %>
+                                        <p class="dropdown-item" id="items" >Items: 0</p>
+                                       <p class="dropdown-item" id="money" >Total: $0</p>
+                                    <%} else {%>
+
                                     <p class="dropdown-item" id="items" >Items: <%=locals.quantity%></p>
-                                    <p class="dropdown-item" id="money" >Total: $<%=locals.total%></p>
+                                    <p class="dropdown-item" id="money" >Total: $<%=locals.total.toFixed(2)%></p>
+                                    <%} %>
+
                                 <%} %>
                                 <div class="col text-center">
                                     <a class="dropdown-item, btn btn-outline-primary my-2 my-sm-0" href="/shopping-cart">Checkout</a>   
