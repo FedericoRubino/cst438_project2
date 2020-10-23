@@ -17,10 +17,14 @@ app.get("/checkout-success", function(req, res){
 var function1 = function(foundItems,res,req){
 	var inventory = new Map();
 	for(var i=0; i<foundItems.length;i++){
-		if(inventory.has(foundItems[i].product_id)){
-			inventory.set(foundItems[i].product_id, inventory.get(foundItems[i].product_id) + 1)
-		} else{
-			inventory.set(foundItems[i].product_id,1);
+		if(foundItems[i].inventory > 0){
+			if(inventory.has(foundItems[i].product_id)){
+				if(inventory.get(foundItems[i].product_id) > 0){
+					inventory.set(foundItems[i].product_id, inventory.get(foundItems[i].product_id) - 1)
+				}
+			} else{
+				inventory.set(foundItems[i].product_id,foundItems[i].inventory - 1);
+			}
 		}
 		if(i == foundItems.length - 1){
 			function2(inventory,req,res)
@@ -30,17 +34,12 @@ var function1 = function(foundItems,res,req){
 
 var function2 = function(inventory,res,req){
 
-	inventory.forEach((key,val) =>{
-		currentInventory = 10;
-		var newInventory = currentInventory - val;
+	inventory.forEach((val, key) =>{
+		var newInventory = val;
 		updateStatement = "UPDATE product_table SET inventory = " + newInventory +" WHERE product_id=" + key;
 		connection.query(updateStatement, function(err,result){
 			if(err) throw err;
 			res.redirect("/");
 		}
 	});
-
-
-
-
 }

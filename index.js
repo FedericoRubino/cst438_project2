@@ -319,88 +319,63 @@ app.get("/login", function(req, res){
 // else
 // 	Cart error
 
-// 6th
-var deleteOrder = function(res, user_id){
-	statement = "DELETE FROM order_table WHERE user_id = " + user_id;
-	connection.query(statement,function(error,results){
-		if(error){throw err;}
-		res.render("checkout-success");
-	});
-}
 
-// 5th
-var updateInventory = function(currentNum, res, currentID, user_id){
-	if(currentNum > 0){
-		var newNum = currentNum - 1;
-		stmt2 = "UPDATE product_table SET inventory = " + newNum + " WHERE product_id = " +  currentID;
- 		connection.query(stmt2,function(err,result){
-			if(err){throw err;
-			} else {
-				console.log(result)
-			}
-	  	});
-	}	
-}
-
-// 4th
-var getInventoryByProductId = function(callback, res, currentID, user_id){
-	var stmt1 = "SELECT inventory FROM product_table WHERE product_id = " + currentID;
-	var currentNum;
-
-	connection.query(stmt1,function(err,result){
-		if(err){throw err;
-		} else {
-			currentNum = result[0].inventory;
-			console.log(currentNum);
-			// callback === updateInventory
-			callback(currentNum, res, currentID, user_id);
-		}	
-	});
-}
-
-// 3rd
-var inventoryUpdate = function(callback, orders, res, user_id){
-	var currentCart = orders;
-
-	console.log(currentCart.length);
-	
-	for(var i = 0; i < currentCart.length; i++){
-		console.log("here");
-		
-		var data = currentCart[i];
-
-		var currentID = data.product_id;
-		console.log(currentID);
-
-		// callback === getInventoryByProductId
-		callback(updateInventory, res, currentID, user_id);
- 	}
-
-}
-// 2nd
-var getOrderTablebyUserId = function(callback, res, user_id){
-	var stmt = "SELECT * FROM order_table WHERE user_id = " + user_id;
-	connection.query(stmt, function(error, results){
-		if(error) throw error;
-		if(results.length > 0){
-			// callback === inventoryUpdate
-			callback(getInventoryByProductId, results, res, user_id);
-		}
-	});
-}
-
-// 1st
 // Checkout Success
-app.get("/checkout-success", function(req, res){
+app.get("/checkout-success", function(req, res){	
 	var user_id = req.session.user.user_id;
-	console.log("user_id: " + user_id);
 
-	getOrderTablebyUserId(inventoryUpdate, res, user_id);
+	var statement = "SELECT * FROM order_table NATURAL JOIN product_table where user_id = " + user_id;
+	connection.query(statement,function(err,results){
+		if(err) throw err;
+		if(results.length > 0){
+			function1( results,req,res);
+		} else {
+			res.redirect("/");
+		}
+	})
+});	
 
-	// After we are done looping through the order to update the inventory in the database
- 	// We delete the users order(cart)
- 	deleteOrder(res, user_id);
-});
+// 1st checkout
+var function1 = function(foundItems,res,req){
+	var inventory = new Map();
+	for(var i=0; i<foundItems.length;i++){
+		if(foundItems[i].inventory > 0){
+			if(inventory.has(foundItems[i].product_id)){
+				if(inventory.get(foundItems[i].product_id) > 0){
+					inventory.set(foundItems[i].product_id, inventory.get(foundItems[i].product_id) - 1)
+				}
+			} else{
+				inventory.set(foundItems[i].product_id,foundItems[i].inventory - 1);
+			}
+		}
+		if(i == foundItems.length - 1){
+			function2(inventory,req,res)
+		}
+	}
+}
+
+// 2nd checkout
+var function2 = function(inventory,res,req){
+
+	inventory.forEach((val, key) =>{
+		var newInventory = val;
+		updateStatement = "UPDATE product_table SET inventory = " + newInventory +" WHERE product_id=" + key;
+		connection.query(updateStatement, function(err,result){
+			if(err) throw err;
+			deleteTable(res,req);
+		});
+	});
+}
+
+// goes 3rd
+var deleteTable = function(res,req){
+	statement = "DELETE FROM order_table WHERE user_id = " + req.session.user.user_id + ";";
+	connection.query(statement,function(err,result){
+		if(err){throw err;}
+	});
+	res.render("checkout-success");
+}
+
 
 // User Profile
 app.get("/user_profile", function(req, res){
