@@ -77,22 +77,38 @@ app.use(function(req, res, next) {
 
 function onSubmit(token) {
      document.getElementById("register").submit();
-   }
+}
 
+
+function checkForDuplicateUser(user,res,req){
+	let statement = "SELECT * FROM user_table where username = '" + user + "';";
+	connection.query(statement, function(err, results){
+		if(err) {throw err;}
+		console.log("result:", results);
+		console.log(results.length);
+		if(results.length == 0){
+			let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
+			let data = [req.body.username, req.body.password]; 
+			connection.query(statement, data, function(error, result){
+				if(error){ throw error; }
+				else{ 
+					console.log(result); 
+					console.log(data);
+					res.redirect('/login');
+				}
+			}); 
+		} else {
+		res.render("create-account", {duplicateUsername:true});
+		}
+	});
+}
 
 // register user path
 app.post('/register-account', function(req, res){
 	let statement = 'INSERT INTO user_table (username, password) VALUES (?, ?)';
 	let data = [req.body.username, req.body.password]; 
 	// console.log(data);
-	connection.query(statement, data, function(error, result){
-		if(error){ throw error; }
-		else{ 
-			console.log(result); 
-			console.log(data);;
-			res.redirect('/login');
-		}
-	}); 
+	checkForDuplicateUser(req.body.username,res,req);
 });
 
 
@@ -111,12 +127,7 @@ function checkUser(username){
 		});
 	});
 }
-// Grabs the password in the table
-// function checkPassword(password){
-// 	return new Promise(function(resolve, reject){
-// 		// Use bcrypt to compare password?
-// 	})
-// }
+
 
 app.get('/logout', function(req, res) {
 	// clear session
@@ -308,7 +319,7 @@ app.get("/login", function(req, res){
 // else
 // 	Cart error
 
-
+// 6th
 var deleteOrder = function(res, user_id){
 	statement = "DELETE FROM order_table WHERE user_id = " + user_id;
 	connection.query(statement,function(error,results){
@@ -317,6 +328,7 @@ var deleteOrder = function(res, user_id){
 	});
 }
 
+// 5th
 var updateInventory = function(currentNum, res, currentID, user_id){
 	if(currentNum > 0){
 		var newNum = currentNum - 1;
@@ -330,7 +342,7 @@ var updateInventory = function(currentNum, res, currentID, user_id){
 	}	
 }
 
-
+// 4th
 var getInventoryByProductId = function(callback, res, currentID, user_id){
 	var stmt1 = "SELECT inventory FROM product_table WHERE product_id = " + currentID;
 	var currentNum;
@@ -346,7 +358,8 @@ var getInventoryByProductId = function(callback, res, currentID, user_id){
 	});
 }
 
-var inventoryUpdate = function(orders, res, user_id){
+// 3rd
+var inventoryUpdate = function(callback, orders, res, user_id){
 	var currentCart = orders;
 
 	console.log(currentCart.length);
@@ -359,30 +372,34 @@ var inventoryUpdate = function(orders, res, user_id){
 		var currentID = data.product_id;
 		console.log(currentID);
 
-		getInventoryByProductId(updateInventory, res, currentID, user_id);
+		// callback === getInventoryByProductId
+		callback(updateInventory, res, currentID, user_id);
  	}
 
- 	// After we are done looping through the order to update the inventory in the database
- 	// We delete the users order(cart)
- 	deleteOrder(res, user_id);
 }
-
+// 2nd
 var getOrderTablebyUserId = function(callback, res, user_id){
-	var stmt = "SELECT * FROM order_table NATURAL JOIN product_table WHERE user_id = " + user_id;
+	var stmt = "SELECT * FROM order_table WHERE user_id = " + user_id;
 	connection.query(stmt, function(error, results){
 		if(error) throw error;
 		if(results.length > 0){
-			// callback === getInventoryByProductId
-			callback(results, res, user_id);
+			// callback === inventoryUpdate
+			callback(getInventoryByProductId, results, res, user_id);
 		}
 	});
 }
 
-
+// 1st
 // Checkout Success
 app.get("/checkout-success", function(req, res){
 	var user_id = req.session.user.user_id;
+	console.log("user_id: " + user_id);
+
 	getOrderTablebyUserId(inventoryUpdate, res, user_id);
+
+	// After we are done looping through the order to update the inventory in the database
+ 	// We delete the users order(cart)
+ 	deleteOrder(res, user_id);
 });
 
 // User Profile
@@ -395,7 +412,7 @@ app.get("/user_profile", function(req, res){
 
 // Create Account
 app.get("/create-account", function(req, res){
-	res.render("create-account");
+	res.render("create-account", {duplicateUsername:false});
 });
 
 // Login Authentication TODO: make controller
